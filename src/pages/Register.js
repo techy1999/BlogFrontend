@@ -27,7 +27,7 @@ const Register = () => {
 
     try {
       const { data } = await axios.post(
-        "http://localhost:8000/api/user/register",
+        "https://fierce-teal-angelfish.cyclic.app/api/user/register",
         {
           name: inputs.name,
           email: inputs.email,

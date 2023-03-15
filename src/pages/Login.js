@@ -28,7 +28,7 @@ const Login = () => {
 
     try {
       const { data } = await axios.post(
-        "http://localhost:8000/api/user/login",
+        "https://fierce-teal-angelfish.cyclic.app/api/user/login",
         {
           email: inputs.email,
           password: inputs.password,

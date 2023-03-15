@@ -5,7 +5,9 @@ const Blog = () => {
   const [blogs, setBlogs] = useState([]);
   const getAllBlogs = async () => {
     try {
-      const { data } = await axios.get("http://localhost:8000/api/blog");
+      const { data } = await axios.get(
+        "https://fierce-teal-angelfish.cyclic.app/api/blog"
+      );
       if (data?.success) {
         console.log("data", data);
         setBlogs(data?.data);

@@ -52,9 +52,9 @@ export default function UserBlog({
     try {
       //pass auth token and verify...
       const authToken = localStorage.getItem("token");
-      console.log("authToken", authToken, typeof authToken);
+      //console.log("authToken", authToken, typeof authToken);
       const { data } = await axios.put(
-        `http://localhost:8000/api/blog/${blogId}`,
+        `https://fierce-teal-angelfish.cyclic.app/api/blog/${blogId}`,
         {
           headers: {
             Authorization: "Bearer " + authToken,

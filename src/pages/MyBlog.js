@@ -11,11 +11,14 @@ const MyBlog = () => {
       //pass auth token and verify...
       const authToken = localStorage.getItem("token");
       console.log("authToken", authToken, typeof authToken);
-      const { data } = await axios.get("http://localhost:8000/api/my-blog", {
-        headers: {
-          Authorization: "Bearer " + authToken,
-        },
-      });
+      const { data } = await axios.get(
+        "https://fierce-teal-angelfish.cyclic.app/api/my-blog",
+        {
+          headers: {
+            Authorization: "Bearer " + authToken,
+          },
+        }
+      );
       if (data?.success) {
         console.log("Userdata", data.data);
         setUserBlogs(data?.data);

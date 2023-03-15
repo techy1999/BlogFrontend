@@ -30,7 +30,7 @@ const CreateBlog = () => {
     console.log("authToken 12 Create", authToken, typeof authToken);
     try {
       const { data } = await axios.post(
-        "http://localhost:8000/api/blog",
+        "https://fierce-teal-angelfish.cyclic.app/api/blog",
         inputs,
         {
           headers: {
