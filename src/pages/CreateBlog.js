@@ -24,10 +24,9 @@ const CreateBlog = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(inputs);
 
     const authToken = localStorage.getItem("token");
-    console.log("authToken 12 Create", authToken, typeof authToken);
+
     try {
       const { data } = await axios.post(
         "https://fierce-teal-angelfish.cyclic.app/api/blog",
@@ -39,9 +38,8 @@ const CreateBlog = () => {
           },
         }
       );
-      console.log("data Create", data);
+      // console.log("data Create", data);
       if (data?.success) {
-        console.log("Userdata Create", data.data);
         alert("Blog created Successful!");
         navigate("/my-blogs");
       }

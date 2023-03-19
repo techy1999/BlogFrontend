@@ -6,6 +6,9 @@ import Register from "./pages/Register";
 import MyBlog from "./pages/MyBlog";
 import CreateBlog from "./pages/CreateBlog";
 import Footer from "./components/Footer";
+import BlogDetail from "./pages/BlogDetail";
+import Profile from "./pages/Profile";
+import "./App.css";
 function App() {
   return (
     <>
@@ -13,10 +16,12 @@ function App() {
       <Routes>
         <Route path="/" element={<Blog />} />
         <Route path="/blogs" element={<Blog />} />
+        <Route path="/blog/:id" element={<BlogDetail />} />
         <Route path="/my-blogs" element={<MyBlog />} />
         <Route path="/blog" element={<CreateBlog />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
       <Footer />
     </>
