@@ -26,7 +26,7 @@ const Header = () => {
     try {
       dispatch(authActions.logout());
       alert("Logout successfully");
-      navigate("/login");
+      navigate("/");
       window.location.reload(); //so that user can able to logout completely.
     } catch (error) {
       console.log("err", error);

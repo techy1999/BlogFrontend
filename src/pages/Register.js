@@ -5,6 +5,7 @@ import axios from "axios";
 
 const Register = () => {
   const navigate = useNavigate();
+  const [loginSuccess, setLoginSuccess] = useState(false);
 
   //state
   const [inputs, setInputes] = useState({
@@ -43,8 +44,8 @@ const Register = () => {
           },
         }
       );
-      alert("data", data);
-      console.log("data", data);
+      alert("data", data.data);
+      console.log("data", data.data);
       navigate("/login");
     } catch (error) {
       console.log("error", error);
