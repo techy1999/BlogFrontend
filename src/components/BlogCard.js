@@ -92,12 +92,7 @@ export default function BlogCard({
               {content}
             </Typography>
           </CardContent>
-          <CardMedia
-            component="img"
-            height="194"
-            video={video}
-            alt="Paella dish"
-          />
+
           <CardActions disableSpacing>
             <span style={{ color: "red" }}> {likeCount ? likeCount : "0"}</span>
 

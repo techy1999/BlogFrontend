@@ -1,6 +1,7 @@
 import * as React from "react";
 import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
+
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
@@ -15,6 +16,11 @@ import ShareIcon from "@mui/icons-material/Share";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import axios from "axios";
+import Dialog from "@mui/material/Dialog";
+import DialogTitle from "@mui/material/DialogTitle";
+import DialogContent from "@mui/material/DialogContent";
+import DialogActions from "@mui/material/DialogActions";
+import { Button, TextField } from "@mui/material";
 
 export default function UserBlog({
   title,
@@ -25,14 +31,23 @@ export default function UserBlog({
   createdAt,
   updatedAt,
 }) {
+  const [expanded, setExpanded] = React.useState(false);
+  const [editDialogOpen, setEditDialogOpen] = React.useState(false);
+  const [updatedBlogData, setUpdatedBlogData] = React.useState({
+    title: title,
+    content: content,
+    video: video,
+    image: image,
+  });
+
   //Delete Blog
   const deleteBlog = async (blogId) => {
     try {
       //pass auth token and verify...
       const authToken = localStorage.getItem("token");
-      console.log("authToken", authToken, typeof authToken);
+
       const { data } = await axios.delete(
-        `http://localhost:8000/api/blog/${blogId}`,
+        `https://fierce-teal-angelfish.cyclic.app/api/blog/${blogId}`,
         {
           headers: {
             Authorization: "Bearer " + authToken,
@@ -48,21 +63,29 @@ export default function UserBlog({
     }
   };
   // Update Blog will work need to create a form ...
-  const updateBlog = async (blogId) => {
+  const updateBlog = async () => {
+    console.log("InsideupdateBlog ");
+    console.log("BlogId,, ", blogId);
+    console.log("UpdatedData", updatedBlogData);
     try {
-      //pass auth token and verify...
+      // Get the auth token from localStorage
       const authToken = localStorage.getItem("token");
-      //console.log("authToken", authToken, typeof authToken);
+
+      // Make the API call to update the blog
       const { data } = await axios.put(
-        `https://fierce-teal-angelfish.cyclic.app/api/blog/${blogId}`,
+        `http://localhost:8000/api/blog/${blogId}`,
+        updatedBlogData,
         {
           headers: {
-            Authorization: "Bearer " + authToken,
+            Authorization: `Bearer ${authToken}`,
           },
         }
       );
+
+      // If the API call is successful, alert the user and reload the page
       if (data?.success) {
-        alert("Blog delete successful !");
+        alert("Blog update successful!");
+        window.location.reload();
       }
     } catch (error) {
       console.log("User Error", error);
@@ -70,8 +93,13 @@ export default function UserBlog({
   };
 
   console.log("title userBlog", title, blogId);
-  const [expanded, setExpanded] = React.useState(false);
 
+  const handleEditClick = () => {
+    setEditDialogOpen(true);
+  };
+  const handleEditDialogClose = () => {
+    setEditDialogOpen(false);
+  };
   return (
     <Card
       sx={{
@@ -111,26 +139,74 @@ export default function UserBlog({
           {content}
         </Typography>
       </CardContent>
-      <CardMedia component="img" height="194" video={video} alt="Paella dish" />
+
       <CardActions disableSpacing>
-        <IconButton aria-label="add to favorites">
-          <FavoriteIcon />
-        </IconButton>
-        <IconButton aria-label="share">
-          <ShareIcon />
-        </IconButton>
-        <IconButton aria-label="edit">
+        <IconButton aria-label="edit" onClick={handleEditClick}>
           <EditIcon />
         </IconButton>
         <IconButton aria-label="delete">
           <DeleteIcon onClick={() => deleteBlog(blogId)} />
         </IconButton>
       </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-        <CardContent>
-          <Typography paragraph>{content}</Typography>
-        </CardContent>
-      </Collapse>
+      <Dialog open={editDialogOpen} onClose={handleEditDialogClose}>
+        <DialogTitle>Edit Blog</DialogTitle>
+        <DialogContent>
+          <TextField
+            label="Title"
+            value={updatedBlogData.title}
+            onChange={(e) =>
+              setUpdatedBlogData({
+                ...updatedBlogData,
+                title: e.target.value,
+              })
+            }
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Content"
+            value={updatedBlogData.content}
+            onChange={(e) =>
+              setUpdatedBlogData({
+                ...updatedBlogData,
+                content: e.target.value,
+              })
+            }
+            fullWidth
+            multiline
+            rows={4}
+            margin="normal"
+          />
+          <TextField
+            label="Image URL"
+            value={updatedBlogData.image}
+            onChange={(e) =>
+              setUpdatedBlogData({
+                ...updatedBlogData,
+                IMAGE: e.target.value,
+              })
+            }
+            fullWidth
+            margin="normal"
+          />
+          <TextField
+            label="Video URL"
+            value={updatedBlogData.video}
+            onChange={(e) =>
+              setUpdatedBlogData({
+                ...updatedBlogData,
+                video: e.target.value,
+              })
+            }
+            fullWidth
+            margin="normal"
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleEditDialogClose}>Cancel</Button>
+          <Button onClick={updateBlog}>Update</Button>
+        </DialogActions>
+      </Dialog>
     </Card>
   );
 }
