@@ -65,7 +65,7 @@ export default function UserBlog({
   // Update Blog will work need to create a form ...
   const updateBlog = async () => {
     console.log("InsideupdateBlog ");
-    console.log("BlogId,, ", blogId);
+    console.log("BlogId ", blogId);
     console.log("UpdatedData", updatedBlogData);
     try {
       // Get the auth token from localStorage
@@ -73,7 +73,7 @@ export default function UserBlog({
 
       // Make the API call to update the blog
       const { data } = await axios.put(
-        `http://localhost:8000/api/blog/${blogId}`,
+        `https://fierce-teal-angelfish.cyclic.app/api/blog/${blogId}`,
         updatedBlogData,
         {
           headers: {
