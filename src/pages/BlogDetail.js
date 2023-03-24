@@ -75,13 +75,45 @@ const BlogDetail = () => {
   };
 
   return (
-    <div className="container" style={{ width: "60%", margin: "auto" }}>
-      <h1>{blog.title}</h1>
-      <p>{blog.content}</p>
-      {blog.image_url && <img src={blog.image_url} alt="blog" />}
+    <div
+      className="container"
+      style={{
+        width: "60%",
+        margin: "auto",
+        paddingTop: "20px",
+        paddingBottom: "20px",
+      }}
+    >
+      {blog.image_url && <img src={blog.image_url} alt="blog" width="100%" />}
+
+      <h1
+        style={{
+          paddingTop: "20px",
+          paddingBottom: "10px",
+        }}
+      >
+        {blog.title}
+      </h1>
+      <p
+        style={{
+          fontWeight: "lighter",
+          lineHeight: "30px",
+          fontFamily: "sans-serif",
+          fontSize: "20px",
+          paddingTop: "10px",
+          paddingBottom: "20px",
+        }}
+      >
+        {blog.content}
+      </p>
+
       {blog.video_url && (
-        <video controls>
+        // <video controls>
+        //   <source src={blog.video_url} type="video/mp4" />
+        // </video>
+        <video controls width="100%">
           <source src={blog.video_url} type="video/mp4" />
+          Sorry, your browser doesn't support embedded videos.
         </video>
       )}
       <p>Author: {blog.author.name}</p>
@@ -110,13 +142,39 @@ const BlogDetail = () => {
       ) : (
         <p>No comments yet.</p>
       )}
-      <form onSubmit={handleSubmit} style={{ marginTop: "10px" }}>
+      <form
+        onSubmit={handleSubmit}
+        style={{
+          marginTop: "10px",
+          display: "flex",
+          alignItems: "baseline",
+          justifyItems: "end",
+        }}
+      >
         <textarea
+          rows="4"
+          cols="50"
+          maxlength="200"
           value={comment}
           onChange={(e) => setComment(e.target.value)}
+          style={{
+            color: "#3C76D2",
+            padding: "10px 20px",
+          }}
         />
 
-        <button type="submit">Add Comment</button>
+        <button
+          type="submit"
+          style={{
+            backgroundColor: "#3C76D2",
+            color: "white",
+            padding: "10px 50px",
+            border: "none",
+            marginLeft: "20px",
+          }}
+        >
+          Add Comment
+        </button>
       </form>
     </div>
   );

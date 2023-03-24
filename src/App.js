@@ -9,6 +9,7 @@ import Footer from "./components/Footer";
 import BlogDetail from "./pages/BlogDetail";
 import Profile from "./pages/Profile";
 import "./App.css";
+
 function App() {
   return (
     <>

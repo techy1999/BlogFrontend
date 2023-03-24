@@ -64,9 +64,6 @@ export default function UserBlog({
   };
   // Update Blog will work need to create a form ...
   const updateBlog = async () => {
-    console.log("InsideupdateBlog ");
-    console.log("BlogId ", blogId);
-    console.log("UpdatedData", updatedBlogData);
     try {
       // Get the auth token from localStorage
       const authToken = localStorage.getItem("token");

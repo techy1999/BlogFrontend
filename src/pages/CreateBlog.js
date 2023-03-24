@@ -41,7 +41,7 @@ const CreateBlog = () => {
       // console.log("data Create", data);
       if (data?.success) {
         alert("Blog created Successful!");
-        navigate("/my-blogs");
+        navigate("/");
       }
     } catch (error) {
       console.log("error", error);
@@ -121,7 +121,7 @@ const CreateBlog = () => {
             sx={{ borderRadius: 3, marginTop: 3 }}
             type="submit"
             color="primary"
-            onClick={() => navigate("/my-blogs")}
+            onClick={() => navigate("/")}
           >
             want to see your Blogs ? Go here
           </Button>

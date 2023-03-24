@@ -46,7 +46,7 @@ const Register = () => {
       );
       alert("data", data.data);
       console.log("data", data.data);
-      navigate("/login");
+      navigate("/");
     } catch (error) {
       console.log("error", error);
     }

@@ -43,45 +43,47 @@ const Profile = () => {
   }, []);
 
   return (
-    <Card
-      sx={{
-        width: "50%",
-        margin: "auto",
-        mt: 2,
-        padding: 2,
-        boxShadow: "5px 5px 5px #ccc",
-        ":hover": {
-          boxShadow: "10px 10px 10px #ccc",
-        },
-      }}
-    >
-      <CardHeader
-        avatar={
-          <Avatar
-            sx={{ bgcolor: red[500], fontSize: "15px" }}
-            aria-label="recipe"
-          >
-            User
-          </Avatar>
-        }
-        title="Profile"
-      />
+    <>
+      <Card
+        sx={{
+          width: "50%",
+          margin: "auto",
+          mt: 4,
+          padding: 2,
+          boxShadow: "5px 5px 5px #ccc",
+          ":hover": {
+            boxShadow: "10px 10px 10px #ccc",
+          },
+        }}
+      >
+        <CardHeader
+          avatar={
+            <Avatar
+              sx={{ bgcolor: red[500], fontSize: "15px" }}
+              aria-label="recipe"
+            >
+              User
+            </Avatar>
+          }
+          title="Profile"
+        />
 
-      <CardContent>
-        <Typography variant="body2" color="text.secondary">
-          <h3>UserName : {user.name} </h3>
-        </Typography>
-        <Typography paragraph color="text.primary">
-          <h3>Email :{user.email}</h3>
-        </Typography>
-        <Typography paragraph color="text.primary">
-          <h3>Experience :{user.experience}</h3>
-        </Typography>
-        <Typography paragraph color="text.primary">
-          <h3>Social Profile :{user.social_profile}</h3>
-        </Typography>
-      </CardContent>
-    </Card>
+        <CardContent>
+          <Typography variant="body2" color="text.secondary">
+            <h3>UserName : {user.name} </h3>
+          </Typography>
+          <Typography paragraph color="text.primary">
+            <h3>Email :{user.email}</h3>
+          </Typography>
+          <Typography paragraph color="text.primary">
+            <h3>Experience :{user.experience}</h3>
+          </Typography>
+          <Typography paragraph color="text.primary">
+            <h3>Social Profile :{user.social_profile}</h3>
+          </Typography>
+        </CardContent>
+      </Card>
+    </>
   );
 };
 
