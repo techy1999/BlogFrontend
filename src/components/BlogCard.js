@@ -13,6 +13,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function BlogCard({
   id,
@@ -27,14 +28,29 @@ export default function BlogCard({
   likeCount,
 }) {
   const [expanded, setExpanded] = React.useState(false);
-
+  const navigate = useNavigate();
   const handleLikes = async () => {
+    console.log(
+      "handleLikes 123333",
+      process.env.REACT_APP_ENVIRONMENT,
+      process.env.REACT_APP_DEV_URL,
+      process.env.REACT_APP_PROD_UR
+    );
     try {
       //pass auth token and verify...
       const authToken = localStorage.getItem("token");
-      console.log("handleLikes authToken", authToken, typeof authToken);
+
+      if (!authToken) {
+        navigate("/login");
+        return;
+      }
+
       const { data } = await axios.put(
-        `https://fierce-teal-angelfish.cyclic.app/api/blog/like/${id}`,
+        `${
+          process.env.REACT_APP_ENVIRONMENT === "development"
+            ? `${process.env.REACT_APP_DEV_URL}/blog/like/${id}`
+            : `${process.env.REACT_APP_PROD_URL}/blog/like/${id}`
+        }`,
         {},
         {
           headers: {
@@ -42,7 +58,7 @@ export default function BlogCard({
           },
         }
       );
-      console.log("data for likes", data);
+
       if (data?.success) {
         alert("Blog liked successful !");
         window.location.reload();

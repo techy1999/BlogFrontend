@@ -47,7 +47,7 @@ export default function UserBlog({
       const authToken = localStorage.getItem("token");
 
       const { data } = await axios.delete(
-        `https://fierce-teal-angelfish.cyclic.app/api/blog/${blogId}`,
+        `http://localhost:8000/api/blog/${blogId}`,
         {
           headers: {
             Authorization: "Bearer " + authToken,
@@ -70,7 +70,7 @@ export default function UserBlog({
 
       // Make the API call to update the blog
       const { data } = await axios.put(
-        `https://fierce-teal-angelfish.cyclic.app/api/blog/${blogId}`,
+        `http://localhost:8000/api/blog/${blogId}`,
         updatedBlogData,
         {
           headers: {

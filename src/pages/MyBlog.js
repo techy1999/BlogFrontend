@@ -12,7 +12,12 @@ const MyBlog = () => {
       const authToken = localStorage.getItem("token");
       console.log("authToken", authToken, typeof authToken);
       const { data } = await axios.get(
-        "https://fierce-teal-angelfish.cyclic.app/api/my-blog",
+        // "http://localhost:8000/api/my-blog",
+        `${
+          process.env.REACT_APP_ENVIRONMENT === "development"
+            ? `${process.env.REACT_APP_DEV_URL}/my-blog`
+            : `${process.env.REACT_APP_PROD_URL}/my-blog`
+        }`,
         {
           headers: {
             Authorization: "Bearer " + authToken,
@@ -33,7 +38,7 @@ const MyBlog = () => {
   }, []);
   return (
     <>
-      <h1>My Blogs</h1>
+  
       {userBlogs &&
         userBlogs.map((userBlog) => (
           <>

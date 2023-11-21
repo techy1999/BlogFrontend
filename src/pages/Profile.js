@@ -14,6 +14,7 @@ const Profile = () => {
     email: "",
     experience: "",
     social_profile: "",
+    blogOfUser: "",
   });
 
   const userProfile = async () => {
@@ -22,7 +23,12 @@ const Profile = () => {
       const authToken = localStorage.getItem("token");
 
       const { data } = await axios.get(
-        `https://fierce-teal-angelfish.cyclic.app/api/user/profile`,
+        // `http://localhost:8000/api/user/profile`,
+        `${
+          process.env.REACT_APP_ENVIRONMENT === "development"
+            ? `${process.env.REACT_APP_DEV_URL}/user/profile`
+            : `${process.env.REACT_APP_PROD_URL}/user/profile`
+        }`,
         {
           headers: {
             Authorization: "Bearer " + authToken,
@@ -80,6 +86,9 @@ const Profile = () => {
           </Typography>
           <Typography paragraph color="text.primary">
             <h3>Social Profile :{user.social_profile}</h3>
+          </Typography>
+          <Typography paragraph color="text.primary">
+            <h3>Total Blog :{user.blogOfUser}</h3>
           </Typography>
         </CardContent>
       </Card>

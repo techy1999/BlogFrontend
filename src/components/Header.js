@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import Alert from '@mui/material/Alert';
 import {
   Box,
   AppBar,
@@ -25,7 +25,8 @@ const Header = () => {
   const handleLogout = () => {
     try {
       dispatch(authActions.logout());
-      alert("Logout successfully");
+      <Alert severity="success">Logout successfully!</Alert>
+      // alert("Logout successfully");
       navigate("/");
       window.location.reload(); //so that user can able to logout completely.
     } catch (error) {
@@ -37,7 +38,13 @@ const Header = () => {
     <>
       <AppBar position="sticky">
         <Toolbar>
-          <Typography variant="h4">ComeBlog </Typography>
+          <Typography
+            style={{ cursor: "pointer" }}
+            variant="h4"
+            onClick={() => navigate("/")}
+          >
+            ComeBlog{" "}
+          </Typography>
           <Box display={"flex"} marginLeft="auto" marginRight={"auto"}>
             <Tabs textColor="white" value={value}>
               <Tab label="Blogs" LinkComponent={Link} to="/blogs" />

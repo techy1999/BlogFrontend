@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
 
 const BlogDetail = () => {
+  const navigate = useNavigate();
+  const [responseStatusMessage, setResponseStatusMessage] = useState("");
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
   const { id } = useParams();
@@ -17,8 +22,13 @@ const BlogDetail = () => {
 
   const getBlog = async () => {
     try {
+      // const { data } = await axios.get(`http://localhost:8000/api/blog/${id}`);
       const { data } = await axios.get(
-        `https://fierce-teal-angelfish.cyclic.app/api/blog/${id}`
+        `${
+          process.env.REACT_APP_ENVIRONMENT === "development"
+            ? `${process.env.REACT_APP_DEV_URL}/blog/${id}`
+            : `${process.env.REACT_APP_PROD_URL}/blog/${id}`
+        }`
       );
       if (data?.success) {
         console.log("data ON DETAIL PAGE :", data);
@@ -30,8 +40,15 @@ const BlogDetail = () => {
   };
   const getAllCommentsOnBlog = async () => {
     try {
+      // const { data } = await axios.get(
+      //   `http://localhost:8000/api/comments/${id}`
+      // );
       const { data } = await axios.get(
-        `https://fierce-teal-angelfish.cyclic.app/api/comments/${id}`
+        `${
+          process.env.REACT_APP_ENVIRONMENT === "development"
+            ? `${process.env.REACT_APP_DEV_URL}/comments/${id}`
+            : `${process.env.REACT_APP_PROD_URL}/comments/${id}`
+        }`
       );
       if (data?.success) {
         console.log("data ON Comment PAGE :", data);
@@ -47,30 +64,45 @@ const BlogDetail = () => {
   }, [id]);
 
   const handleSubmit = async (e) => {
+    console.log("Handle submit for add comment ");
     e.preventDefault();
     const authToken = localStorage.getItem("token");
-
-    try {
-      const { data } = await axios.post(
-        `https://fierce-teal-angelfish.cyclic.app/api/comments/${id}`,
-        {
-          content: comment,
-        },
-        {
-          headers: {
-            "content-type": "application/json",
-            Authorization: "Bearer " + authToken,
+    if (!authToken) {
+      navigate("/login");
+      return;
+    } else {
+      try {
+        const { data } = await axios.post(
+          // `http://localhost:8000/api/comments/${id}`,
+          `${
+            process.env.REACT_APP_ENVIRONMENT === "development"
+              ? `${process.env.REACT_APP_DEV_URL}/comments/${id}`
+              : `${process.env.REACT_APP_PROD_URL}/comments/${id}`
+          }`,
+          {
+            content: comment,
           },
+          {
+            headers: {
+              "content-type": "application/json",
+              Authorization: "Bearer " + authToken,
+            },
+          }
+        );
+        if (data?.success) {
+          console.log("inside if condtion");
+          console.log("comment added", data);
+          setComments([...comments, data?.data]);
+          setComment("");
+          <Alert severity="success">Commented successfully!</Alert>
+          alert("commented successfully");
+        } else {
+          console.log("else condtion redirect to loginpage");
+          navigate("/login");
         }
-      );
-      if (data?.success) {
-        console.log("comment added", data);
-        setComments([...comments, data?.data]);
-        setComment("");
-        alert("commented successfully");
+      } catch (error) {
+        console.log("Error", error);
       }
-    } catch (error) {
-      console.log("Error", error);
     }
   };
 

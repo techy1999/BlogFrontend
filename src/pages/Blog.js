@@ -13,18 +13,23 @@ const Blog = () => {
     try {
       if (searchValue) {
         const { data } = await axios.get(
-          `https://fierce-teal-angelfish.cyclic.app/api/blog?search=${searchValue}`
+          `${process.env.REACT_APP_ENVIRONMENT === "development"
+            ? `${process.env.REACT_APP_DEV_URL}/blog?search=${searchValue}`
+            : `${process.env.REACT_APP_PROD_URL}/blog?search=${searchValue}`
+          }
+          `
         );
         if (data?.success) {
-          console.log("seachHandler data", data);
           setBlogs(data?.data);
         }
       } else {
         const { data } = await axios.get(
-          "https://fierce-teal-angelfish.cyclic.app/api/blog"
+          `${process.env.REACT_APP_ENVIRONMENT === "development"
+            ? `${process.env.REACT_APP_DEV_URL}/blog`
+            : `${process.env.REACT_APP_PROD_URL}/blog`
+          }`
         );
         if (data?.success) {
-          console.log("data", data);
           setBlogs(data?.data);
         }
       }
@@ -46,7 +51,7 @@ const Blog = () => {
 
   return (
     <>
-      <h1>Blog </h1>
+      <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
       <Box
         sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
       >
@@ -67,22 +72,39 @@ const Blog = () => {
           }}
         />
         <Button onClick={searchHandler}>Search</Button>
+
+
+          {blogs &&
+            blogs.map((blog) => (
+              <BlogCard
+                id={blog._id}
+                title={blog.title}
+                content={blog.content}
+                image={blog.image_url}
+                video={blog.video_url}
+                name={blog.author.name}
+                email={blog.author.email}
+                likeCount={blog.likeCount}
+                createdAt={blog.createdAt}
+              />
+            ))}
+
       </Box>
 
-      {blogs &&
-        blogs.map((blog) => (
-          <BlogCard
-            id={blog._id}
-            title={blog.title}
-            content={blog.content}
-            image={blog.image_url}
-            video={blog.video_url}
-            name={blog.author.name}
-            email={blog.author.email}
-            likeCount={blog.likeCount}
-            createdAt={blog.createdAt}
-          />
-        ))}
+      
+
+
+              <Box>
+          <h4>Recent Posts</h4>
+
+          <p>Post 1 goes here</p>
+          <p>Post 2 goes here</p>
+
+              </Box>
+      
+
+      </Box>
+
     </>
   );
 };

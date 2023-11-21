@@ -2,10 +2,14 @@ import React, { useState } from "react";
 import { Box, Typography, TextField, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Register = () => {
   const navigate = useNavigate();
   const [loginSuccess, setLoginSuccess] = useState(false);
+  const [loginResponse, setLoginResponse] = useState("");
+  const notify = () => toast(loginResponse);
 
   //state
   const [inputs, setInputes] = useState({
@@ -29,7 +33,12 @@ const Register = () => {
 
     try {
       const { data } = await axios.post(
-        "https://fierce-teal-angelfish.cyclic.app/api/user/register",
+        // "http://localhost:8000/api/user/register",
+        `${
+          process.env.REACT_APP_ENVIRONMENT === "development"
+            ? `${process.env.REACT_APP_DEV_URL}/user/register`
+            : `${process.env.REACT_APP_PROD_URL}/user/register`
+        }`,
         {
           name: inputs.name,
           email: inputs.email,
@@ -46,6 +55,7 @@ const Register = () => {
       );
       alert("data", data.data);
       console.log("data", data.data);
+      setLoginResponse(data.data);
       navigate("/");
     } catch (error) {
       console.log("error", error);
@@ -126,6 +136,7 @@ const Register = () => {
             type="submit"
             variant="contained"
             color="primary"
+            onClick={notify}
           >
             Submit
           </Button>
