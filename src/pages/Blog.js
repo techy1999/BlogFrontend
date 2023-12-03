@@ -4,12 +4,13 @@ import BlogCard from "../components/BlogCard";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 import { Box } from "@mui/material";
-
+import EmptyScreen from "../components/common/EmptyScreen"
 const Blog = () => {
   const [blogs, setBlogs] = useState([]);
   const [searchValue, setSearchValue] = useState("");
 
   const getAllBlogs = async (searchValue) => {
+    console.log("sddsds2333 ", process.env.REACT_APP_DEV_URL);
     try {
       if (searchValue) {
         const { data } = await axios.get(
@@ -52,26 +53,26 @@ const Blog = () => {
   return (
     <>
       <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-      <Box
-        sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
-      >
-        <TextField
-          fullWidth
-          label="Search Blog By title,email,name"
-          sx={{
-            margin: "auto",
-            width: "50%",
-            display: "flex",
-            alignItems: "center",
-            marginTop: "40px",
-          }}
-          id="fullWidth"
-          onChange={(e) => {
-            // Do something with the search query here
-            changeHandler(e);
-          }}
-        />
-        <Button onClick={searchHandler}>Search</Button>
+        <Box
+          sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+        >
+          <TextField
+            fullWidth
+            label="Search Blog By title,email,name"
+            sx={{
+              margin: "auto",
+              width: "50%",
+              display: "flex",
+              alignItems: "center",
+              marginTop: "40px",
+            }}
+            id="fullWidth"
+            onChange={(e) => {
+              // Do something with the search query here
+              changeHandler(e);
+            }}
+          />
+          <Button variant="outlined" onClick={searchHandler}>Search</Button>
 
 
           {blogs &&
@@ -89,19 +90,9 @@ const Blog = () => {
               />
             ))}
 
-      </Box>
-
-      
-
-
-              <Box>
-          <h4>Recent Posts</h4>
-
-          <p>Post 1 goes here</p>
-          <p>Post 2 goes here</p>
-
-              </Box>
-      
+            {blogs.length == 0 && (<EmptyScreen />)}
+             
+        </Box>
 
       </Box>
 
