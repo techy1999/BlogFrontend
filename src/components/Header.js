@@ -43,7 +43,7 @@ const Header = () => {
             variant="h4"
             onClick={() => navigate("/")}
           >
-            ComeBlog{" "}
+            Nomads{" "}
           </Typography>
           <Box display={"flex"} marginLeft="auto" marginRight={"auto"}>
             <Tabs textColor="white" value={value}>
