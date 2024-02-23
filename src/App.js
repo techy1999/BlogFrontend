@@ -9,13 +9,14 @@ import Footer from "./components/Footer";
 import BlogDetail from "./pages/BlogDetail";
 import Profile from "./pages/Profile";
 import "./App.css";
+import Home from "./pages/Home";
 
 function App() {
   return (
     <>
       <Header />
       <Routes>
-        <Route path="/" element={<Blog />} />
+        <Route path="/" element={<Home />} />
         <Route path="/blogs" element={<Blog />} />
         <Route path="/blog/:id" element={<BlogDetail />} />
         <Route path="/my-blogs" element={<MyBlog />} />
