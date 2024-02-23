@@ -14,3 +14,5 @@ Steps for Frontend Deployment
 4. Delete all the file.
 5. Drag and drop all files of build in s3 bucket
 6. deployment is done.
+
+Follow steps for branching - issue - #2
