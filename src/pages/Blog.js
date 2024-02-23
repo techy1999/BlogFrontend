@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import BlogCard from "../components/BlogCard";
 import TextField from "@mui/material/TextField";
-import { Button } from "@mui/material";
+import { Button, Pagination } from "@mui/material";
 import { Box } from "@mui/material";
 import EmptyScreen from "../components/common/EmptyScreen"
+import BasicPagination from "../components/common/BasicPagination";
+
+
 const Blog = () => {
   const [blogs, setBlogs] = useState([]);
   const [searchValue, setSearchValue] = useState("");
@@ -94,6 +97,7 @@ const Blog = () => {
              
         </Box>
 
+          <BasicPagination page={10}/>
       </Box>
 
     </>
