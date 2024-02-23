@@ -15,4 +15,4 @@ Steps for Frontend Deployment
 5. Drag and drop all files of build in s3 bucket
 6. deployment is done.
 
-Follow steps for branching - issue - #2
+Follow steps for branching - issue - [#2](https://github.com/techy1999/BlogFrontend/issues/2)
