@@ -7,7 +7,7 @@ API hostiedn :- https://fierce-teal-angelfish.cyclic.app/
 s3 Website link :- 
 http://nomadsfrontendproduction.s3-website.ap-south-1.amazonaws.com/
 
-Steps for Frontend Deployment
+# Steps for Frontend Deployment
 1. npm run build
 2. Go to build folder 
 3. Login into aws, go to s3 service and Choose frontend bucket
