@@ -72,7 +72,8 @@ export default function BlogCard({
     <>
       <Card
         sx={{
-          width: "50%",
+          width: "100%",
+          maxHeight:"500px",
           margin: "auto",
           mt: 2,
           padding: 2,
