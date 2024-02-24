@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import BlogCard from "../components/BlogCard";
 import TextField from "@mui/material/TextField";
-import { Button } from "@mui/material";
-import { Box } from "@mui/material";
+import { Button, Paper, Container, Typography } from "@mui/material";
+import { Box, Grid } from "@mui/material";
 import EmptyScreen from "../components/common/EmptyScreen"
 const Blog = () => {
   const [blogs, setBlogs] = useState([]);
@@ -52,10 +52,10 @@ const Blog = () => {
 
   return (
     <>
-      <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-        <Box
-          sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
-        >
+
+      <Container>
+
+        <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }} >
           <TextField
             fullWidth
             label="Search Blog By title,email,name"
@@ -65,6 +65,7 @@ const Blog = () => {
               display: "flex",
               alignItems: "center",
               marginTop: "40px",
+              marginBottom:"20px"
             }}
             id="fullWidth"
             onChange={(e) => {
@@ -73,6 +74,41 @@ const Blog = () => {
             }}
           />
           <Button variant="outlined" onClick={searchHandler}>Search</Button>
+        </Box>
+
+        <Grid container spacing={4} mt={4}>
+
+
+
+          {blogs &&
+            blogs.map((blog) => (
+              <Grid item xs={12} md={4}>
+                <BlogCard
+                  id={blog._id}
+                  title={blog.title}
+                  content={blog.content}
+                  image={blog.image_url}
+                  video={blog.video_url}
+                  name={blog.author.name}
+                  email={blog.author.email}
+                  likeCount={blog.likeCount}
+                  createdAt={blog.createdAt}
+                />
+              </Grid>
+            ))}
+
+          {blogs.length == 0 && (<EmptyScreen />)}
+
+        </Grid>
+       {/* {blogs.length != 0 && <BasicPagination page={10}/> } */}
+      </Container>
+
+
+      {/* <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+        <Box
+          sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
+        >
+
 
 
           {blogs &&
@@ -90,11 +126,11 @@ const Blog = () => {
               />
             ))}
 
-            {blogs.length == 0 && (<EmptyScreen />)}
-             
+          {blogs.length == 0 && (<EmptyScreen />)}
+
         </Box>
 
-      </Box>
+      </Box> */}
 
     </>
   );
