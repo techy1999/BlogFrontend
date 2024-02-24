@@ -2,9 +2,15 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import BlogCard from "../components/BlogCard";
 import TextField from "@mui/material/TextField";
+
 import { Button, Paper, Container, Typography } from "@mui/material";
 import { Box, Grid } from "@mui/material";
+
+import { Pagination } from "@mui/material";
 import EmptyScreen from "../components/common/EmptyScreen"
+import BasicPagination from "../components/common/BasicPagination";
+
+
 const Blog = () => {
   const [blogs, setBlogs] = useState([]);
   const [searchValue, setSearchValue] = useState("");
@@ -100,7 +106,7 @@ const Blog = () => {
           {blogs.length == 0 && (<EmptyScreen />)}
 
         </Grid>
-       {/* {blogs.length != 0 && <BasicPagination page={10}/> } */}
+        {blogs.length != 0 && <BasicPagination page={10}/> } 
       </Container>
 
 

@@ -47,6 +47,7 @@ const Header = () => {
           </Typography>
           <Box display={"flex"} marginLeft="auto" marginRight={"auto"}>
             <Tabs textColor="white" value={value}>
+               <Tab label="Home" LinkComponent={Link} to="/" />  
               <Tab label="Blogs" LinkComponent={Link} to="/blogs" />
               {isLogin && (
                 <>
