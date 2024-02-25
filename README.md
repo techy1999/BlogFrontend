@@ -16,7 +16,7 @@ http://nomadsfrontendproduction.s3-website.ap-south-1.amazonaws.com/
 
 ```
 REACT_APP_DEV_URL="http://localhost:8000/api"
-REACT_APP_PROD_URL="http://nomads.solution/api"
+REACT_APP_PROD_URL="https://www.nomads.solutions/api"
 REACT_APP_ENVIRONMENT="development" #Change it to "development" for local development testing.
 ```
 - npm start
