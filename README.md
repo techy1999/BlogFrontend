@@ -195,4 +195,3 @@ Deployment using creating build deployed on aws using ```nginx```  and url to ``
 
 ## License
 MIT
-   
