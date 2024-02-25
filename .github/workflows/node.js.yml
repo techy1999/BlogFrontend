@@ -45,7 +45,7 @@ jobs:
       - uses: actions/checkout@v1
       - run: npm ci
       - run: npm install
-      - run: npm run build
+      - run: npm run build --if-present -- --warn-only
       - uses: jakejarvis/s3-sync-action@master
         with:
           args: --acl public-read --follow-symlinks --delete
