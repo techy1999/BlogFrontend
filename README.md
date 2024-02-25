@@ -1,12 +1,4 @@
-Netifly for frontend :-
-Websit link :- https://comeblog123.netlify.app/blogs
-cyclic for backend API: -
-API hostiedn :- https://fierce-teal-angelfish.cyclic.app/
-
-
-s3 Website link :- 
-http://nomadsfrontendproduction.s3-website.ap-south-1.amazonaws.com/
-
+# NOMADS
 
 # Setup Locally
 - Go inside the BlogFrontend Folder

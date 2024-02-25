@@ -37,7 +37,7 @@ const Footer = () => {
             }}
           >
             <Typography variant="caption" color="white">
-              Copyright ©{new Date().getFullYear()}. [] Limited
+              Copyright ©{new Date().getFullYear()}.  NOMADS.SOLUTIONS
             </Typography>
           </Box>
         </Container>
