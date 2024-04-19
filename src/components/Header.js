@@ -12,9 +12,15 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { authActions } from "../redux/store";
+import SimpleSnackbar from './../components/common/SnackBar';
+import {SNACKBAR_SEVERITY} from '../constants/common/all.constants'
 
 const Header = () => {
   const [value, setValue] = useState("");
+
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState(""); // State for Snackbar message
+  const [severity, setSeverity] = useState(SNACKBAR_SEVERITY.SUCCESS);
 
   //global state
   const navigate = useNavigate();
@@ -25,18 +31,31 @@ const Header = () => {
   const handleLogout = () => {
     try {
       dispatch(authActions.logout());
-      <Alert severity="success">Logout successfully!</Alert>
-      // alert("Logout successfully");
-      navigate("/");
-      window.location.reload(); //so that user can able to logout completely.
+      setSeverity(SNACKBAR_SEVERITY.SUCCESS)
+      setOpenSnackbar(true); 
+      setSnackbarMessage("Logout Successful !" + "\n\n Bye !");
+      setTimeout(() => {
+        navigate("/");
+        window.location.reload(); //so that user can able to logout completely.
+      }, 1000); // Delay for 1 second (1000 milliseconds)
     } catch (error) {
+      setSeverity(SNACKBAR_SEVERITY.ERROR)
+      setOpenSnackbar(true); 
+      setSnackbarMessage(error.response.data.message || error.response.statusText);
       console.log("err", error);
     }
   };
 
   return (
     <>
+    <SimpleSnackbar 
+        open={openSnackbar} 
+        setOpen={setOpenSnackbar} 
+        message={snackbarMessage} 
+        severity={severity}
+      />
       <AppBar position="sticky">
+     
         <Toolbar>
           <Typography
             style={{ cursor: "pointer" }}
