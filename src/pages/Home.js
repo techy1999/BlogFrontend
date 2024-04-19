@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
@@ -31,6 +31,34 @@ const Image = styled('img')({
 });
 
 const Home = () => {
+
+    const [messageObj,setMessageObj] = useState({
+        name:"",
+        email:"",
+        message:"",
+    })
+
+    const handleContactUs = (event) => {
+        const { name, value } = event.target;
+        setMessageObj(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    }
+
+    const handleSubmitContactUs = (event) => {
+        event.preventDefault();
+
+        // Perform any form validation here before submitting the data
+        console.log("Form submitted:", messageObj); // Log the form data
+        setMessageObj({
+            name: "",
+            email: "",
+            message: ""
+        });
+    }
+    
+
     return (
         <>
             <Container>
@@ -248,7 +276,7 @@ const Home = () => {
                     <Grid item xs={12} md={6}>
                         <Content>
 
-                            <form onSubmit={console.log("handle sumit")}>
+                            <form >
                                 <Box
                                     display={"flex"}
                                     flexDirection={"column"}
@@ -267,26 +295,28 @@ const Home = () => {
                                         name="name"
                                         type={"text"}
                                         sx={{ marginTop: 3 }}
-                                        // value={inputs.email}
-                                        // onChange={handleChange}
+                                        value={messageObj.name}
+                                        onChange={handleContactUs}
                                         required
                                     />
                                     <TextField
-                                        placeholder="email"
+                                        placeholder="Email"
                                         name="email"
                                         type={"email"}
                                         sx={{ marginTop: 3 }}
-                                        // value={inputs.password}
-                                        // onChange={handleChange}
+                                        value={messageObj.email}
+                                        onChange={handleContactUs}
                                         required
                                     />
                                       <TextareaAutosize
-                                        placeholder="message"
+                                        placeholder="Message"
                                         name="message"
                                         type={"text"}
-                                        sx={{ marginTop: 3 }}
-                                        // value={inputs.password}
-                                        // onChange={handleChange}
+                                        style={{marginTop:"20px",width:"100%",padding:"10px"}}
+                                        value={messageObj.message}
+                                        onChange={handleContactUs}
+                                        minRows={5}
+
                                         required
                                     />
 
@@ -295,6 +325,7 @@ const Home = () => {
                                         type="submit"
                                         variant="contained"
                                         color="primary"
+                                        onClick={handleSubmitContactUs}
                                     >
                                         Submit
                                     </Button>
