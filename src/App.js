@@ -8,8 +8,10 @@ import CreateBlog from "./pages/CreateBlog";
 import Footer from "./components/Footer";
 import BlogDetail from "./pages/BlogDetail";
 import Profile from "./pages/Profile";
+import NotFound from "./components/common/NotFound"
 import "./App.css";
 import Home from "./pages/Home";
+import NotFoundImage from "./assets/undraw_page_not_found.svg"
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile />} />
+         {/* Wildcard route for handling 404 errors */}
+         <Route path="*" element={<NotFound imageUrl={NotFoundImage} />} />
       </Routes>
       <Footer />
     </>
