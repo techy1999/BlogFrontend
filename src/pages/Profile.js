@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 
-import Card from "@mui/material/Card";
+
+import { Card, Divider, Chip } from "@mui/material";
 import Grid from "@mui/material/Grid"
-
-import CardHeader from "@mui/material/CardHeader";
 import CardContent from "@mui/material/CardContent";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import { ImageListItem } from "@mui/material";
 import PersonIcon from '@mui/icons-material/Person';
+import { fetchUserProfile } from "../services/profile/profile.service";
+import ProfileDetail from './../assets/undraw_profile_detail.svg';
+
 import Box from "@mui/material/Box"
 const Profile = () => {
   const [user, setUser] = useState({
@@ -20,29 +21,16 @@ const Profile = () => {
     blogOfUser: "",
   });
 
+
   const userProfile = async () => {
     try {
-      //pass auth token and verify...
-      const authToken = localStorage.getItem("token");
-
-      const { data } = await axios.get(
-        // `http://localhost:8000/api/user/profile`,
-        `${process.env.REACT_APP_ENVIRONMENT === "development"
-          ? `${process.env.REACT_APP_DEV_URL}/user/profile`
-          : `${process.env.REACT_APP_PROD_URL}/user/profile`
-        }`,
-        {
-          headers: {
-            Authorization: "Bearer " + authToken,
-          },
-        }
-      );
-      if (data?.success) {
-        console.log("Profile data", data.data);
-        setUser(data.data);
-      }
+      const userProfileData = await fetchUserProfile();
+      console.log("userProfileData ", userProfileData);
+      setUser(userProfileData);
     } catch (error) {
+      // Handle error if needed
       console.log("Profile Error", error);
+      throw error;
     }
   };
 
@@ -52,121 +40,77 @@ const Profile = () => {
 
   return (
     <>
-      {/* 
-      <Grid container spacing={2}>
+      <Grid container spacing={2} mt={4} p={4} sx={{
+        display:"flex",
+        alignItems:"center",
+        justifyContent:"center",
+        flexDirection:"column"
+      }}>
+
         <Grid item xs={8}>
           <Card
             sx={{
-              width: "50%",
+              width: "100%",
               margin: "auto",
-              mt: 4,
+              mt: 2,
               padding: 2,
-              boxShadow: "5px 5px 5px #ccc",
-              ":hover": {
-                boxShadow: "10px 10px 10px #ccc",
-              },
-              minHeight: "60vh"
+              boxShadow: "5px 5px 10px  #1976D2",
+              minHeight: "60vh",
             }}
           >
-
-
-            <CardContent >
-              <Typography variant="body2" color="text.secondary">
-                <h3>  <PersonIcon />  <span >User Name :  </span> {user.name} </h3>
-              </Typography>
-              <Typography paragraph color="text.primary">
-                <h3>Email :{user.email}</h3>
-              </Typography>
-              <Typography paragraph color="text.primary">
-                <h3>Experience :{user.experience}</h3>
-              </Typography>
-              <Typography paragraph color="text.primary">
-                <h3>Social Profile :{user.social_profile}</h3>
-              </Typography>
-              <Typography paragraph color="text.primary">
-                <h3>Total Blog :{user.blogOfUser}</h3>
-              </Typography>
-
-              <Typography paragraph color="text.primary">
-                <h3>Total Blog views :{user.blogOfUser}</h3>
-              </Typography>
-
-              <Typography paragraph color="text.primary">
-                <h3>Total Blog Likes :{user.blogOfUser}</h3>
-              </Typography>
-
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={4}>
-          <Box sx={{width:"50%"}}>
-            <img src="https://media.istockphoto.com/id/493763323/photo/happy-multiethnic-peoples-headshot.jpg?s=2048x2048&w=is&k=20&c=FbpfTf-lI9pULj9lrx9KmoZqz5XsTjuWvQo3nUO05F4=" sx={{ width: "40px" }} />
-          </Box>
-
-        </Grid>
-
-      </Grid> */}
-      <Grid container spacing={2}>
-        <Grid item xs={8}>
-          <Card
-            sx={{
-              width: "50%",
-              margin: "auto",
-              mt: 4,
-              padding: 2,
-              boxShadow: "5px 5px 5px #ccc",
-              ":hover": {
-                boxShadow: "10px 10px 10px #ccc",
-              },
-              minHeight: "60vh"
-            }}
-          >
-            <CardContent>
-              <Typography variant="body2" color="text.secondary" sx={{paddingBottom:"20px"}}>
-                <h3><PersonIcon /> <span>User Name: </span>{user.name}</h3>
-              </Typography>
-              <Typography paragraph color="text.primary">
-                <h3>Email: {user.email}</h3>
-              </Typography>
-              <Typography paragraph color="text.primary">
-                <h3>Experience: {user.experience}</h3>
-              </Typography>
-              <Typography paragraph color="text.primary">
-                <h3>Social Profile: {user.social_profile}</h3>
-              </Typography>
-              <Typography paragraph color="text.primary">
-                <h3>Total Blog: {user.blogOfUser}</h3>
-              </Typography>
-              <Typography paragraph color="text.primary">
-                <h3>Total Blog views: {user.blogOfUser}</h3>
-              </Typography>
-              <Typography paragraph color="text.primary">
-                <h3>Total Blog Likes: {user.blogOfUser}</h3>
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item xs={4}>
-          <Box sx={{ width: "80%" }}>
-            <ImageListItem key={"sdsdffd"}>
+            <Typography variant="h2" textAlign="center">
+              User Profile
+            </Typography>
+            <Box sx={{ width: "50%" }}>
               <img
-              
-                src={`https://media.istockphoto.com/id/493763323/photo/happy-multiethnic-peoples-headshot.jpg?s=2048x2048&w=is&k=20&c=FbpfTf-lI9pULj9lrx9KmoZqz5XsTjuWvQo3nUO05F4=`}
-                alt={"Image "}
-                loading="lazy"
+                src={ProfileDetail}
+                alt={"Profile Image"}
+                height={250}
+                width={500}
               />
-            </ImageListItem>
-            {/* <img
-              src="https://media.istockphoto.com/id/493763323/photo/happy-multiethnic-peoples-headshot.jpg?s=2048x2048&w=is&k=20&c=FbpfTf-lI9pULj9lrx9KmoZqz5XsTjuWvQo3nUO05F4="
-              sx={{ width: "50%", height: "auto" }} // Adjust the styling here
-              alt="Profile"
-            /> */}
-          </Box>
+            </Box>
+
+            <Box mt={3}>
+              <Divider style={{ backgroundColor: "#1976D2" }} />
+            </Box>
+
+
+            <CardContent sx={{ padding: "20px" }}>
+
+              <Typography paragraph color="text.primary" >
+                <h3> <Chip sx={{ marginRight: "10px" }} avatar={<Avatar>E </Avatar>} label="Email : " />{user.email}</h3>
+              </Typography>
+              <Typography paragraph color="text.primary">
+                <h3>
+                  <Chip sx={{ marginRight: "10px" }} avatar={<Avatar>E </Avatar>} label="Experience : " />
+                  {user.experience} in years.
+                </h3>
+              </Typography>
+              <Typography paragraph color="text.primary">
+
+                <h3><Chip sx={{ marginRight: "10px" }} avatar={<Avatar>S </Avatar>} label=" Social Profile : " />
+                  <a href="/">{user.social_profile}</a>
+                </h3>
+              </Typography>
+              <Typography paragraph color="text.primary">
+
+                <h3><Chip sx={{ marginRight: "10px" }} avatar={<Avatar>T </Avatar>} label="Total Blog : " /> {user.blogOfUser}</h3>
+              </Typography>
+              <Typography paragraph color="text.primary">
+
+                <h3><Chip sx={{ marginRight: "10px" }} avatar={<Avatar>T </Avatar>} label="Total Blog views : " /> {user.blogOfUser}</h3>
+              </Typography>
+              <Typography paragraph color="text.primary">
+
+                <h3>  <Chip sx={{ marginRight: "10px" }} avatar={<Avatar>T </Avatar>} label="Total Blog Likes : " /> {user.blogOfUser}</h3>
+              </Typography>
+            </CardContent>
+          </Card>
         </Grid>
+        {/* <Grid item xs={4}>
+          
+        </Grid> */}
       </Grid>
-
-
-
     </>
   );
 };
