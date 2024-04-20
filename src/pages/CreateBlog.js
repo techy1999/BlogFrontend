@@ -1,16 +1,20 @@
 import React, { useState } from "react";
-import { Box, Typography, TextField, Button, Grid } from "@mui/material";
+import { Box, Typography, TextField, Button, Grid ,Divider} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 import { Alert, InputLabel } from "@mui/material";
-import AlertTitle from "@mui/material/AlertTitle";
-import AlertContainer from "../components/common/AlertContainer";
-
+import SimpleSnackbar from './../components/common/SnackBar';
+import {SNACKBAR_SEVERITY} from '../constants/common/all.constants'
 const CreateBlog = () => {
   const navigate = useNavigate();
+
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState(""); // State for Snackbar message
+  const [severity, setSeverity] = useState(SNACKBAR_SEVERITY.SUCCESS);
+
 
   const [inputs, setInputs] = useState({
     title: "",
@@ -18,9 +22,6 @@ const CreateBlog = () => {
     image_url: "",
     video_url: "",
   });
-
-  const [responseSuccessData, setSuccessResponseData] = useState(false);
-  const [responseFailedsData, setFailedResponseData] = useState(false);
 
   const handleChange = (e) => {
     setInputs((prevState) => ({
@@ -50,30 +51,31 @@ const CreateBlog = () => {
       );
 
       if (data?.success) {
-        setSuccessResponseData(true);
+        setSeverity(SNACKBAR_SEVERITY.SUCCESS)
+        setOpenSnackbar(true); 
+        setSnackbarMessage("Blog Created , SuccessFully !");
+
         navigate("/");
       } else {
-        setFailedResponseData(true);
+        setSeverity(SNACKBAR_SEVERITY.ERROR)
+        setOpenSnackbar(true); 
+        setSnackbarMessage(data.message);
       }
     } catch (error) {
-      setFailedResponseData(true);
+      setSeverity(SNACKBAR_SEVERITY.ERROR)
+      setOpenSnackbar(true); 
+      setSnackbarMessage(error.response.data.message || error.response.statusText);
       console.log("error", error);
     }
   };
 
   return (
     <>
-      <AlertContainer
-        type="success"
-        show={responseSuccessData}
-        message={`Blog created successfully! Go to Blogs`}
-        onClose={() => setSuccessResponseData(false)}
-      />
-      <AlertContainer
-        type="error"
-        show={responseFailedsData}
-        message={`Blog Creation failed — try again with valid data!`}
-        onClose={() => setFailedResponseData(false)}
+      <SimpleSnackbar 
+        open={openSnackbar} 
+        setOpen={setOpenSnackbar} 
+        message={snackbarMessage} 
+        severity={severity}
       />
       <form onSubmit={handleSubmit}>
         <Box
@@ -82,15 +84,20 @@ const CreateBlog = () => {
           marginTop={5}
           padding={3}
           borderRadius={5}
-          boxShadow={3}
+          boxShadow="5px 5px 10px #1976D2"
         >
           <Typography
-            variant="h4"
-            sx={{ marginBottom: 1 }}
+            sx={{ textTransform: "uppercase",// Make the text bold
+            textShadow: "5px 5px 10px #1976D2",}} // Apply text shadow
+            variant="h2"
+            padding={3}
+            textAlign="center"
           >
             Add Post
           </Typography>
-          <hr sx={{  marginBottom: 3 }}  />
+          <Box mt={4} mb={4}>
+              <Divider style={{ backgroundColor: "#1976D2" }} />
+            </Box>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6}>
               <InputLabel sx={{ marginBottom: 1 }}>Title</InputLabel>
@@ -124,8 +131,9 @@ const CreateBlog = () => {
                 value={inputs.content}
                 onChange={handleChange}
                 cols={72}
-                minRows={25}
-                sx={{ width: "100%", marginTop: 3 }}
+                minRows={10}
+                sx={{ width: "100%", marginTop: 3}}
+                style={{ padding:"10px"}}
                 required
               />
             </Grid>
@@ -147,6 +155,7 @@ const CreateBlog = () => {
                 variant="contained"
                 color="primary"
                 sx={{ borderRadius: 3, marginTop: 3 }}
+                fullWidth
               >
                 Submit
               </Button>
