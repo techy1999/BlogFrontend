@@ -6,12 +6,15 @@ import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
 import CommentIcon from '@mui/icons-material/Comment';
 import AlertContainer from "../components/common/AlertContainer";
+import SimpleSnackbar from './../components/common/SnackBar';
+import {SNACKBAR_SEVERITY} from '../constants/common/all.constants'
 
 
 const BlogDetail = () => {
   const navigate = useNavigate();
-  const [responseStatusMessage, setResponseStatusMessage] = useState(false);
-  const [responseFailedsData, setFailedResponseData] = useState(false);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState(""); // State for Snackbar message
+  const [severity, setSeverity] = useState(SNACKBAR_SEVERITY.SUCCESS);
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
   const { id } = useParams();
@@ -35,12 +38,9 @@ const BlogDetail = () => {
       );
       if (data?.success) {
         console.log("data ON DETAIL PAGE :", data);
-      
-        setResponseStatusMessage(true);
         setBlog(data?.data);
       }
     } catch (error) {
-      setFailedResponseData(true);
       console.log("Error", error);
     }
   };
@@ -93,17 +93,18 @@ const BlogDetail = () => {
         if (data?.success) {
           setComments([...comments, data?.data]);
           setComment("");
-          <Alert severity="success">Commented Success!</Alert>
-          setResponseStatusMessage(true);
-       
+          setSeverity(SNACKBAR_SEVERITY.SUCCESS)
+          setOpenSnackbar(true); 
+          setSnackbarMessage("Commnent Succesful, SuccessFully !" + "Thank you !");
         } else {
-          <Alert severity="error">Commented failed!</Alert>
-          setFailedResponseData(false);
+
           console.log("else condtion redirect to loginpage");
           navigate("/login");
         }
       } catch (error) {
-        <Alert severity="error">Commented failed!</Alert>
+        setSeverity(SNACKBAR_SEVERITY.ERROR)
+          setOpenSnackbar(true); 
+          setSnackbarMessage(error.response.data.message || error.response.statusText);
         console.log("Error", error);
       }
     }
@@ -112,19 +113,12 @@ const BlogDetail = () => {
   return (
 
     <>
-      <AlertContainer
-        type="success"
-        show={responseStatusMessage}
-        message={`Commented successfully!`}
-        onClose={() => setResponseStatusMessage(false)}
+      <SimpleSnackbar 
+        open={openSnackbar} 
+        setOpen={setOpenSnackbar} 
+        message={snackbarMessage} 
+        severity={severity}
       />
-      <AlertContainer
-        type="error"
-        show={responseFailedsData}
-        message={`Comment Creation failed — try again with valid data!`}
-        onClose={() => setFailedResponseData(false)}
-      />
-
       <div
         className="container"
         style={{
