@@ -23,6 +23,7 @@ import DialogActions from "@mui/material/DialogActions";
 import { Button, TextField } from "@mui/material";
 import Alert from "@mui/material/Alert";
 import AlertContainer from "./common/AlertContainer";
+import Tooltip from "@mui/material/Tooltip";
 
 export default function UserBlog({
   title,
@@ -34,7 +35,7 @@ export default function UserBlog({
   updatedAt,
 }) {
   const [expanded, setExpanded] = React.useState(false);
-  const [responseSuccessData,setResponseSuccessData] = React.useState(false);
+  const [responseSuccessData, setResponseSuccessData] = React.useState(false);
   const [responseFailedData, setResponseFailedData] = React.useState(false);
   const [editDialogOpen, setEditDialogOpen] = React.useState(false);
   const [updatedBlogData, setUpdatedBlogData] = React.useState({
@@ -101,7 +102,6 @@ export default function UserBlog({
     setEditDialogOpen(false);
   };
   return (
-
     <>
       <AlertContainer
         type="success"
@@ -115,7 +115,6 @@ export default function UserBlog({
         show={responseFailedData}
         message={`Blog created successfully! Go to Blogs`}
         onClose={() => setResponseFailedData(false)}
-
       />
 
       <Card
@@ -147,7 +146,12 @@ export default function UserBlog({
           subheader={updatedAt}
         />
 
-        <CardMedia component="img" height="194" image={image} alt="Paella dish" />
+        <CardMedia
+          component="img"
+          height="194"
+          image={image}
+          alt="Paella dish"
+        />
         <CardContent>
           <Typography variant="body2" color="text.secondary">
             {title}
@@ -158,12 +162,16 @@ export default function UserBlog({
         </CardContent>
 
         <CardActions disableSpacing>
-          <IconButton aria-label="edit" onClick={handleEditClick}>
-            <EditIcon />
-          </IconButton>
-          <IconButton aria-label="delete">
-            <DeleteIcon onClick={() => deleteBlog(blogId)} />
-          </IconButton>
+          <Tooltip title="Edit">
+            <IconButton aria-label="edit" onClick={handleEditClick}>
+              <EditIcon />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Delete">
+            <IconButton aria-label="delete">
+              <DeleteIcon onClick={() => deleteBlog(blogId)} />
+            </IconButton>
+          </Tooltip>
         </CardActions>
         <Dialog open={editDialogOpen} onClose={handleEditDialogClose}>
           <DialogTitle>Edit Blog</DialogTitle>
@@ -226,6 +234,5 @@ export default function UserBlog({
         </Dialog>
       </Card>
     </>
-
   );
 }
