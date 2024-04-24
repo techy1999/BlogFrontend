@@ -3,3 +3,8 @@ export const SNACKBAR_SEVERITY = {
     WARNING:"warning",
     ERROR:"error",
 }
+
+export const PAGE_CONSTANT = {
+    LIMIT_RESULT: 9,
+    PAGE:1,
+}
