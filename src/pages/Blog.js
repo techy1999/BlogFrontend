@@ -9,35 +9,40 @@ import { Box, Grid } from "@mui/material";
 import { Pagination } from "@mui/material";
 import EmptyScreen from "../components/common/EmptyScreen"
 import BasicPagination from "../components/common/BasicPagination";
-
+import {PAGE_CONSTANT} from "../constants/common/all.constants"
 
 const Blog = () => {
   const [blogs, setBlogs] = useState([]);
   const [searchValue, setSearchValue] = useState("");
+  const [pageNumber, setPageNumber] = useState(1);
+  const [totalPageNumber,setTotalPageNumber] = useState(null);
 
   const getAllBlogs = async (searchValue) => {
-    console.log("sddsds2333 ", process.env.REACT_APP_DEV_URL);
+   
     try {
       if (searchValue) {
-        const { data } = await axios.get(
+        const {data} = await axios.get(
           `${process.env.REACT_APP_ENVIRONMENT === "development"
-            ? `${process.env.REACT_APP_DEV_URL}/blog?search=${searchValue}`
-            : `${process.env.REACT_APP_PROD_URL}/blog?search=${searchValue}`
+            ? `${process.env.REACT_APP_DEV_URL}/blog?search=${searchValue}&page=${pageNumber}&limit=${PAGE_CONSTANT.LIMIT_RESULT}`
+            : `${process.env.REACT_APP_PROD_URL}/blog?search=${searchValue}&page=${pageNumber}&limit=${PAGE_CONSTANT.LIMIT_RESULT}`
           }
           `
         );
-        if (data?.success) {
-          setBlogs(data?.data);
+        console.log("data", data);
+        if (data?.data?.data) {
+          setBlogs(data?.data?.data);
+          setTotalPageNumber(data?.data?.totalPages)
         }
       } else {
-        const { data } = await axios.get(
+        const {data} = await axios.get(
           `${process.env.REACT_APP_ENVIRONMENT === "development"
-            ? `${process.env.REACT_APP_DEV_URL}/blog`
-            : `${process.env.REACT_APP_PROD_URL}/blog`
+            ? `${process.env.REACT_APP_DEV_URL}/blog?page=${pageNumber}&limit=${PAGE_CONSTANT.LIMIT_RESULT}`
+            : `${process.env.REACT_APP_PROD_URL}/blog?page=${pageNumber}&limit=${PAGE_CONSTANT.LIMIT_RESULT}`
           }`
         );
-        if (data?.success) {
-          setBlogs(data?.data);
+        if (data.data?.data) {
+          setBlogs(data?.data?.data);
+          setTotalPageNumber(data?.data?.totalPages)
         }
       }
     } catch (error) {
@@ -47,13 +52,17 @@ const Blog = () => {
 
   useEffect(() => {
     getAllBlogs(searchValue);
-  }, []);
+  }, [pageNumber]);
 
   const changeHandler = async (e) => {
     setSearchValue(e.target.value);
   };
   const searchHandler = async () => {
     getAllBlogs(searchValue);
+  };
+
+  const handlePageChange = (page) => {
+    setPageNumber(page);
   };
 
   return (
@@ -106,37 +115,19 @@ const Blog = () => {
           {blogs.length == 0 && (<EmptyScreen />)}
 
         </Grid>
-        {blogs.length != 0 && <BasicPagination page={10}/> } 
-      </Container>
 
+        <Box sx={{
+          display: 'flex',
+          alignItems:"center",
+          justifyContent:"center",
+          marginTop:"20px"
+        }}>
 
-      {/* <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-        <Box
-          sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
-        >
-
-
-
-          {blogs &&
-            blogs.map((blog) => (
-              <BlogCard
-                id={blog._id}
-                title={blog.title}
-                content={blog.content}
-                image={blog.image_url}
-                video={blog.video_url}
-                name={blog.author.name}
-                email={blog.author.email}
-                likeCount={blog.likeCount}
-                createdAt={blog.createdAt}
-              />
-            ))}
-
-          {blogs.length == 0 && (<EmptyScreen />)}
-
+        {totalPageNumber != null && <BasicPagination onChange={handlePageChange}  page={totalPageNumber}/> } 
+            
         </Box>
-
-      </Box> */}
+        
+      </Container>
 
     </>
   );

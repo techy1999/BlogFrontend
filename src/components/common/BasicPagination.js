@@ -1,15 +1,17 @@
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 
-export  function BasicPagination(pageNumber) {
-  console.log(
-    "page", pageNumber.page
-  );
-    return (
-      <Stack spacing={2} mt={4}>
-        <Pagination count={pageNumber.page} color="primary" />
-      </Stack>
-    );
-  }
+export function BasicPagination({ page, onChange }) {
+  const handlePageChange = (event, value) => {
+    console.log("value ", value);
+    onChange(value); // Call 
+  };
 
-  export default BasicPagination;
+  return (
+    <Stack spacing={2} mt={4}>
+      <Pagination count={page} color="primary" onChange={handlePageChange} />
+    </Stack>
+  );
+}
+
+export default BasicPagination;
