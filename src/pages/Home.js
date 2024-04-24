@@ -9,6 +9,9 @@ import heroImage2 from './../assets/undraw_content_team.svg';
 import Team1 from './../assets/undraw_meet_the_team.svg';
 import engineeringService from './../assets/undraw_engineering_team.svg';
 import contactUs from './../assets/undraw_contact_us.svg';
+import { contactUsPost } from '../services/home/contactus.service'; // Import the contactUs function from the service file
+import SimpleSnackbar from './../components/common/SnackBar';
+import {SNACKBAR_SEVERITY} from '../constants/common/all.constants'
 
 const Content = styled('div')({
     display: 'flex',
@@ -32,8 +35,12 @@ const Image = styled('img')({
 
 const Home = () => {
 
+    const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [snackbarMessage, setSnackbarMessage] = useState(""); // State for Snackbar message
+    const [severity, setSeverity] = useState(SNACKBAR_SEVERITY.SUCCESS);
+
     const [messageObj,setMessageObj] = useState({
-        name:"",
+        subject:"",
         email:"",
         message:"",
     })
@@ -46,13 +53,23 @@ const Home = () => {
         }));
     }
 
-    const handleSubmitContactUs = (event) => {
+    const handleSubmitContactUs = async (event) => {
         event.preventDefault();
 
-        // Perform any form validation here before submitting the data
-        console.log("Form submitted:", messageObj); // Log the form data
+        try {
+            const res = await contactUsPost(messageObj);
+            setSeverity(SNACKBAR_SEVERITY.SUCCESS)
+            setOpenSnackbar(true); 
+            setSnackbarMessage("Message Sent succesful");
+        } catch (error) {
+            console.log("error ", error);
+            setSeverity(SNACKBAR_SEVERITY.ERROR)
+            setOpenSnackbar(true); 
+            setSnackbarMessage("Something went wrong !!");
+        }
+       
         setMessageObj({
-            name: "",
+            subject: "",
             email: "",
             message: ""
         });
@@ -61,6 +78,12 @@ const Home = () => {
 
     return (
         <>
+         <SimpleSnackbar 
+        open={openSnackbar} 
+        setOpen={setOpenSnackbar} 
+        message={snackbarMessage} 
+        severity={severity}
+      />
             <Container>
                 <Grid container spacing={4} mt={4}>
                     <Grid item xs={12} md={6}>
@@ -292,10 +315,10 @@ const Home = () => {
 
                                     <TextField
                                         placeholder="Name"
-                                        name="name"
+                                        name="subject"
                                         type={"text"}
                                         sx={{ marginTop: 3 }}
-                                        value={messageObj.name}
+                                        value={messageObj.subject}
                                         onChange={handleContactUs}
                                         required
                                     />
