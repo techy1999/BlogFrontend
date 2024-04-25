@@ -5,9 +5,11 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import Box from  "@mui/material/Box"
+import CloseIcon from '@mui/icons-material/Close';
 
-export default function ConfirmationModel() {
-  const [open, setOpen] = React.useState(false);
+export default function ConfirmationModel({ message, btn1, btn2,openModel,setOpenModel }) {
+  const [open,setOpen ] = React.useState(true);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -18,7 +20,7 @@ export default function ConfirmationModel() {
   };
 
   return (
-    <React.Fragment>
+    <>
       <Button variant="outlined" onClick={handleClickOpen}>
         Open alert dialog
       </Button>
@@ -27,23 +29,22 @@ export default function ConfirmationModel() {
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
+
       >
-        <DialogTitle id="alert-dialog-title">
-          {"Use Google's location service?"}
-        </DialogTitle>
-        <DialogContent>
-          <DialogContentText id="alert-dialog-description">
-            Let Google help apps determine location. This means sending anonymous
-            location data to Google, even when no apps are running.
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Disagree</Button>
-          <Button onClick={handleClose} autoFocus>
-            Agree
-          </Button>
-        </DialogActions>
+        <Box  p={4}>
+          <CloseIcon sx={{float:"right", marginBottom:"10px", fontSize:"20px", cursor:"pointer"}}  onClick={handleClose}/>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              {message}
+            </DialogContentText>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose}>{btn1}</Button>
+            <Button onClick={handleClose} autoFocus>{btn2}</Button>
+          </DialogActions>
+        </Box>
+
       </Dialog>
-    </React.Fragment>
+    </>
   );
 }
