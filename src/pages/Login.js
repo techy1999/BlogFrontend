@@ -5,7 +5,9 @@ import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { authActions } from "../redux/store";
 import SimpleSnackbar from './../components/common/SnackBar';
-import {SNACKBAR_SEVERITY} from '../constants/common/all.constants'
+import {SNACKBAR_SEVERITY} from '../constants/common/all.constants';
+import ThirdPartyAuthLogin from "../components/common/ThirdPartyAuthLogin";
+
 
 const Login = () => {
 
@@ -128,6 +130,9 @@ const Login = () => {
           >
             Submit
           </Button>
+
+          <ThirdPartyAuthLogin />
+          
           <Button
             sx={{ borderRadius: 3, marginTop: 3 }}
             type="submit"
