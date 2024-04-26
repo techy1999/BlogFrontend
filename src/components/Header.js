@@ -43,10 +43,10 @@ const Header = () => {
       setSeverity(SNACKBAR_SEVERITY.SUCCESS)
       setOpenSnackbar(true); 
       setSnackbarMessage("Logout Successful !" + "\n Bye !");
-      setTimeout(() => {
+      // setTimeout(() => {
         navigate("/");
         window.location.reload(); //so that user can able to logout completely.
-      }, 1000); // Delay for 1 second (1000 milliseconds)
+      // }, 1000); // Delay for 1 second (1000 milliseconds)
     } catch (error) {
       setSeverity(SNACKBAR_SEVERITY.ERROR)
       setOpenSnackbar(true); 

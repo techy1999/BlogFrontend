@@ -1,18 +1,14 @@
 import * as React from "react";
-import { styled } from "@mui/material/styles";
-import Card from "@mui/material/Card";
+import {Card,useMediaQuery} from "@mui/material";
 
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
-import Collapse from "@mui/material/Collapse";
 import Avatar from "@mui/material/Avatar";
 import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import { red } from "@mui/material/colors";
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import ShareIcon from "@mui/icons-material/Share";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import axios from "axios";
@@ -21,7 +17,6 @@ import DialogTitle from "@mui/material/DialogTitle";
 import DialogContent from "@mui/material/DialogContent";
 import DialogActions from "@mui/material/DialogActions";
 import { Button, TextField } from "@mui/material";
-import Alert from "@mui/material/Alert";
 import AlertContainer from "./common/AlertContainer";
 import Tooltip from "@mui/material/Tooltip";
 
@@ -34,7 +29,7 @@ export default function UserBlog({
   createdAt,
   updatedAt,
 }) {
-  const [expanded, setExpanded] = React.useState(false);
+  const isMobile = useMediaQuery("(max-width:600px)");
   const [responseSuccessData, setResponseSuccessData] = React.useState(false);
   const [responseFailedData, setResponseFailedData] = React.useState(false);
   const [editDialogOpen, setEditDialogOpen] = React.useState(false);
@@ -52,7 +47,11 @@ export default function UserBlog({
       const authToken = localStorage.getItem("token");
 
       const { data } = await axios.delete(
-        `http://localhost:8000/api/blog/${blogId}`,
+        // `http://localhost:8000/api/blog/${blogId}`,
+        `${process.env.REACT_APP_ENVIRONMENT === "development"
+        ? `${process.env.REACT_APP_DEV_URL}/blog/${blogId}`
+        : `${process.env.REACT_APP_PROD_URL}/blog/${blogId}`
+        }`,
         {
           headers: {
             Authorization: "Bearer " + authToken,
@@ -75,7 +74,11 @@ export default function UserBlog({
 
       // Make the API call to update the blog
       const { data } = await axios.put(
-        `http://localhost:8000/api/blog/${blogId}`,
+        // `http://localhost:8000/api/blog/${blogId}`,
+        `${process.env.REACT_APP_ENVIRONMENT === "development"
+        ? `${process.env.REACT_APP_DEV_URL}/blog/${blogId}`
+        : `${process.env.REACT_APP_PROD_URL}/blog/${blogId}`
+        }`,
         updatedBlogData,
         {
           headers: {
@@ -86,7 +89,7 @@ export default function UserBlog({
 
       // If the API call is successful, alert the user and reload the page
       if (data?.success) {
-        // alert("Blog update successful!");
+        alert("Blog update successful!");
         setResponseSuccessData(true);
         window.location.reload();
       }
@@ -119,7 +122,7 @@ export default function UserBlog({
 
       <Card
         sx={{
-          width: "50%",
+          width: `${isMobile?"88%":"50%"}`,
           margin: "auto",
           mt: 2,
           padding: 2,
@@ -153,10 +156,10 @@ export default function UserBlog({
           alt="Paella dish"
         />
         <CardContent>
-          <Typography variant="body2" color="text.secondary">
+          <Typography variant="h4" color="text.primary">
             {title}
           </Typography>
-          <Typography paragraph color="text.primary">
+          <Typography paragraph color="text.secondary">
             {content}
           </Typography>
         </CardContent>
