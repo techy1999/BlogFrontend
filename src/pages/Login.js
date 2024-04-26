@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Typography, TextField, Button } from "@mui/material";
+import { Box, Typography, TextField, Button ,useMediaQuery} from "@mui/material";
 import { redirect, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
@@ -10,7 +10,8 @@ import ThirdPartyAuthLogin from "../components/common/ThirdPartyAuthLogin";
 
 
 const Login = () => {
-
+ // Media query for detecting small screens (mobile devices)
+ const isMobile = useMediaQuery("(max-width:600px)");
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState(""); // State for Snackbar message
   const [severity, setSeverity] = useState(SNACKBAR_SEVERITY.SUCCESS);
@@ -85,10 +86,10 @@ const Login = () => {
           flexDirection={"column"}
           alignItems={"center"}
           justifyContent={"center"}
-          margin="50px auto"
           boxShadow="5px 5px 10px #1976D2"
           padding={5}
           borderRadius={10}
+          m={`${isMobile? "5%" : "50px auto"}`}
         >
           <Typography
             sx={{ textTransform: "uppercase",// Make the text bold

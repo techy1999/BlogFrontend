@@ -1,14 +1,18 @@
 import React, { useState } from "react";
-import { Box, Typography, TextField, Button, Grid ,Divider} from "@mui/material";
+import { Box, Typography, TextField, Button, Grid ,Divider, useMediaQuery} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
-import { Alert, InputLabel } from "@mui/material";
+import { InputLabel } from "@mui/material";
 import SimpleSnackbar from './../components/common/SnackBar';
 import {SNACKBAR_SEVERITY} from '../constants/common/all.constants'
 const CreateBlog = () => {
+
+  // Media query for detecting small screens (mobile devices)
+  const isMobile = useMediaQuery("(max-width:600px)");
+
   const navigate = useNavigate();
 
   const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -80,11 +84,10 @@ const CreateBlog = () => {
       <form onSubmit={handleSubmit}>
         <Box
           maxWidth={600}
-          margin="auto"
-          marginTop={5}
           padding={3}
           borderRadius={5}
           boxShadow="5px 5px 10px #1976D2"
+          m={`${isMobile? "5%" : "50px auto"}`}
         >
           <Typography
             sx={{ textTransform: "uppercase",// Make the text bold
@@ -130,7 +133,7 @@ const CreateBlog = () => {
                 name="content"
                 value={inputs.content}
                 onChange={handleChange}
-                cols={72}
+                cols={`${isMobile?'36':'72'}`}
                 minRows={10}
                 sx={{ width: "100%", marginTop: 3}}
                 style={{ padding:"10px"}}

@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
 
 
-import { Card, Divider, Chip } from "@mui/material";
+import { Card, Divider, Chip,useMediaQuery,Button } from "@mui/material";
 import Grid from "@mui/material/Grid"
 import CardContent from "@mui/material/CardContent";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
-import { ImageListItem } from "@mui/material";
-import PersonIcon from '@mui/icons-material/Person';
 import { fetchUserProfile } from "../services/profile/profile.service";
 import ProfileDetail from './../assets/undraw_profile_detail.svg';
 
 import Box from "@mui/material/Box"
 const Profile = () => {
+  // Media query for detecting small screens (mobile devices)
+ const isMobile = useMediaQuery("(max-width:600px)");
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -25,7 +25,6 @@ const Profile = () => {
   const userProfile = async () => {
     try {
       const userProfileData = await fetchUserProfile();
-      console.log("userProfileData ", userProfileData);
       setUser(userProfileData);
     } catch (error) {
       // Handle error if needed
@@ -104,12 +103,17 @@ const Profile = () => {
 
                 <h3>  <Chip sx={{ marginRight: "10px" }} avatar={<Avatar>T </Avatar>} label="Total Blog Likes : " /> {user.blogOfUser}</h3>
               </Typography>
+              <Button variant="contained" color="primary" sx={{ margin: 1, color: "white" }} href="/" fullWidth>
+                Logout
+              </Button>
+             
             </CardContent>
+
+          
+
           </Card>
         </Grid>
-        {/* <Grid item xs={4}>
-          
-        </Grid> */}
+        
       </Grid>
     </>
   );

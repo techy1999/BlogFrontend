@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Typography, TextField, Button } from "@mui/material";
+import { Box, Typography, TextField, Button,useMediaQuery } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
@@ -7,6 +7,8 @@ import "react-toastify/dist/ReactToastify.css";
 import SimpleSnackbar from './../components/common/SnackBar';
 import {SNACKBAR_SEVERITY} from '../constants/common/all.constants'
 const Register = () => {
+  const isMobile = useMediaQuery("(max-width:600px)");
+
   const navigate = useNavigate();
   const [loginSuccess, setLoginSuccess] = useState(false);
   const [loginResponse, setLoginResponse] = useState("");
@@ -87,11 +89,11 @@ const Register = () => {
           flexDirection={"column"}
           alignItems={"center"}
           justifyContent={"center"}
-          margin="auto"
           marginTop={10}
           boxShadow="5px 5px 10px #1976D2"
           padding={5}
           borderRadius={10}
+          m={`${isMobile? "5%" : "auto"}`}
         >
           <Typography
             sx={{ textTransform: "uppercase" , textShadow: "5px 5px 10px #1976D2",}}

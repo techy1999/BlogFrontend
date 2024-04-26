@@ -114,7 +114,7 @@ export default function BlogCard({
             alt="Paella dish"
           />
           <CardContent>
-            <Typography paragraph color="text.primary">
+            <Typography paragraph color="text.secondary">
               {content}
             </Typography>
           </CardContent>
