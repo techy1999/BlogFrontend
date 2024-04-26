@@ -28,6 +28,7 @@ function App() {
         <Route path="/profile" element={<Profile />} />
          {/* Wildcard route for handling 404 errors */}
          <Route path="*" element={<NotFound imageUrl={NotFoundImage} />} />
+         <Route path="/api" element={null} />
       </Routes>
       <Footer />
     </>
