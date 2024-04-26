@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Alert from '@mui/material/Alert';
+
 import {
   Box,
   AppBar,
@@ -8,32 +8,41 @@ import {
   Typography,
   Tab,
   Tabs,
+  Drawer,
+  IconButton,
+  useMediaQuery,
 } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { authActions } from "../redux/store";
 import SimpleSnackbar from './../components/common/SnackBar';
 import {SNACKBAR_SEVERITY} from '../constants/common/all.constants'
+import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
 
 const Header = () => {
+  // Media query for detecting small screens (mobile devices)
+  const isMobile = useMediaQuery("(max-width:600px)");
   const [value, setValue] = useState("");
 
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState(""); // State for Snackbar message
   const [severity, setSeverity] = useState(SNACKBAR_SEVERITY.SUCCESS);
-
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   //global state
   const navigate = useNavigate();
   const isLogin = useSelector((state) => state.auth.isLogin);
-  console.log("isLogin", isLogin);
   const dispatch = useDispatch();
 
   const handleLogout = () => {
+    if (isMobile) {
+      setIsMobileSidebarOpen(false);
+    }
     try {
       dispatch(authActions.logout());
       setSeverity(SNACKBAR_SEVERITY.SUCCESS)
       setOpenSnackbar(true); 
-      setSnackbarMessage("Logout Successful !" + "\n\n Bye !");
+      setSnackbarMessage("Logout Successful !" + "\n Bye !");
       setTimeout(() => {
         navigate("/");
         window.location.reload(); //so that user can able to logout completely.
@@ -43,6 +52,14 @@ const Header = () => {
       setOpenSnackbar(true); 
       setSnackbarMessage(error.response.data.message || error.response.statusText);
       console.log("err", error);
+    }
+  };
+
+  
+
+  const handleTabClick = () => {
+    if (isMobile) {
+      setIsMobileSidebarOpen(false); // Close the drawer on mobile
     }
   };
 
@@ -56,7 +73,18 @@ const Header = () => {
       />
       <AppBar position="sticky">
      
+        
         <Toolbar>
+        {isMobile && (
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={() => setIsMobileSidebarOpen(true)}
+            edge="start"
+          >
+            <MenuIcon />
+          </IconButton>
+          )}
           <Typography
             style={{ cursor: "pointer" }}
             variant="h4"
@@ -64,6 +92,7 @@ const Header = () => {
           >
             Nomads{" "}
           </Typography>
+         {!isMobile && <>
           <Box display={"flex"} marginLeft="auto" marginRight={"auto"}>
             <Tabs textColor="white" value={value}>
                <Tab label="Home" LinkComponent={Link} to="/" />  
@@ -111,125 +140,53 @@ const Header = () => {
               </Button>
             </>
           )}
+          </>}
+
         </Toolbar>
       </AppBar>
+
+      {isMobile && <><Drawer PaperProps={{
+            sx: { width: "80%", paddingTop:"20px",backgroundColor:"#1976D2",color:"#fff" },
+          }} anchor="left" open={isMobileSidebarOpen} onClose={() => setIsMobileSidebarOpen(false)}>
+            <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={() => setIsMobileSidebarOpen(false)}
+            edge="start"
+            sx={{float:"right", paddingLeft:"80%"}}
+          >
+            <CloseIcon />
+          </IconButton>
+         <div>
+          
+           <Tabs textColor="white" value={value} orientation="vertical">
+             <Tab label="Home" component={Link} to="/" onClick={handleTabClick} />  
+             <Tab label="Blogs" component={Link} to="/blogs" onClick={handleTabClick} />
+             {isLogin && (
+              <>
+                <Tab label="My Blogs" component={Link} to="/my-blogs" onClick={handleTabClick} />
+                <Tab label="Create blog" LinkComponent={Link} to="/blog" onClick={handleTabClick}  />
+              </>
+            )}
+            {!isLogin && (
+              <>
+                <Button sx={{ margin: 1, color: "white" }} component={Link} to="/login" onClick={handleTabClick} >Login</Button>
+                <Button sx={{ margin: 1, color: "white" }} component={Link} to="/register" onClick={handleTabClick}>Register</Button>
+              </>
+            )}
+            {isLogin && (
+              <>
+                <Button sx={{ margin: 1, color: "white" }} component={Link} to="/profile" onClick={handleTabClick}>Profile</Button>
+                <Button sx={{ margin: 1, color: "white" }} onClick={handleLogout}>Logout</Button>
+              </>
+            )}
+          </Tabs>
+        </div>
+      </Drawer>
+      </>
+      }
     </>
   );
 };
 
 export default Header;
-
-//
-
-// import React, { useEffect, useState } from "react";
-// import axios from "axios";
-// import {
-//   Box,
-//   AppBar,
-//   Toolbar,
-//   Button,
-//   Typography,
-//   Tab,
-//   Tabs,
-//   IconButton,
-//   Menu,
-//   MenuItem,
-// } from "@mui/material";
-// import { Link, useNavigate } from "react-router-dom";
-// import { useSelector, useDispatch } from "react-redux";
-// import { authActions } from "../redux/store";
-// import AccountCircleIcon from "@mui/icons-material/AccountCircle";
-
-// const Header = () => {
-//   const [value, setValue] = useState("");
-//   const [anchorEl, setAnchorEl] = useState(null);
-
-//   //global state
-//   const navigate = useNavigate();
-//   const isLogin = useSelector((state) => state.auth.isLogin);
-//   console.log("isLogin", isLogin);
-//   const dispatch = useDispatch();
-
-//   const handleLogout = () => {
-//     try {
-//       dispatch(authActions.logout());
-//       alert("Logout successfully");
-//       navigate("/login");
-//       window.location.reload(); //so that user can able to logout completely.
-//     } catch (error) {
-//       console.log("err", error);
-//     }
-//   };
-
-//   const handleProfileMenuClick = (event) => {
-//     setAnchorEl(event.currentTarget);
-//   };
-
-//   const handleProfileMenuClose = () => {
-//     setAnchorEl(null);
-//   };
-
-//   return (
-//     <>
-//       <AppBar position="sticky">
-//         <Toolbar>
-//           <Typography variant="h4" onClick={() => navigate("/")}>
-//             ComeBlog {user.name}
-//           </Typography>
-//           <Box display={"flex"} marginLeft="auto" marginRight={"auto"}>
-//             <Tabs textColor="white" value={value}>
-//               <Tab label="Blogs" LinkComponent={Link} to="/blogs" />
-//               {isLogin && (
-//                 <>
-//                   <Tab label="My Blogs" LinkComponent={Link} to="/my-blogs" />
-//                   <Tab label="Create Blog" LinkComponent={Link} to="/blog" />
-//                 </>
-//               )}
-//             </Tabs>
-//           </Box>
-//           {!isLogin && (
-//             <>
-//               <Box display={"flex"} marginLeft="auto">
-//                 <Button
-//                   sx={{ margin: 1, color: "white" }}
-//                   LinkComponent={Link}
-//                   to="/login"
-//                 >
-//                   Login
-//                 </Button>
-//                 <Button
-//                   sx={{ margin: 1, color: "white" }}
-//                   LinkComponent={Link}
-//                   to="/register"
-//                 >
-//                   Register
-//                 </Button>
-//               </Box>
-//             </>
-//           )}
-//           {isLogin && (
-//             <>
-//               {" "}
-//               <IconButton
-//                 sx={{ margin: 1, color: "white" }}
-//                 onClick={handleProfileMenuClick}
-//               >
-//                 <AccountCircleIcon />
-//               </IconButton>
-//               <Menu
-//                 anchorEl={anchorEl}
-//                 open={Boolean(anchorEl)}
-//                 onClose={handleProfileMenuClose}
-//               >
-//                 <MenuItem onClick={handleProfileMenuClose}>Profile</MenuItem>
-//                 <MenuItem onClick={handleLogout}>Logout</MenuItem>
-//               </Menu>
-//             </>
-//           )}
-//         </Toolbar>
-//       </AppBar>
-//     </>
-//   );
-// };
-
-// export default Header;
