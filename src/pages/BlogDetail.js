@@ -2,15 +2,17 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import Alert from "@mui/material/Alert";
-import AlertTitle from "@mui/material/AlertTitle";
 import CommentIcon from '@mui/icons-material/Comment';
-import AlertContainer from "../components/common/AlertContainer";
 import SimpleSnackbar from './../components/common/SnackBar';
 import {SNACKBAR_SEVERITY} from '../constants/common/all.constants'
 
+import {
+  useMediaQuery,
+} from "@mui/material";
 
 const BlogDetail = () => {
+   // Media query for detecting small screens (mobile devices)
+   const isMobile = useMediaQuery("(max-width:600px)");
   const navigate = useNavigate();
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState(""); // State for Snackbar message
@@ -152,9 +154,6 @@ const BlogDetail = () => {
         </p>
 
         {blog.video_url && (
-          // <video controls>
-          //   <source src={blog.video_url} type="video/mp4" />
-          // </video>
           <video controls width="100%">
             <source src={blog.video_url} type="video/mp4" />
             Sorry, your browser doesn't support embedded videos.
@@ -164,6 +163,43 @@ const BlogDetail = () => {
         <p>Email: {blog.author.email}</p>
         <p>Created At: {blog.createdAt}</p>
         <h2 style={{ marginBottom: "10px", marginTop: "10px" }}> <CommentIcon /> Comments</h2>
+
+        <form
+          onSubmit={handleSubmit}
+          style={{
+            marginTop: "10px",
+            display: "flex",
+            alignItems: "baseline",
+            justifyItems: "end",
+            flexDirection:`${isMobile?"column":""}`,
+          }}
+        >
+          <textarea
+            rows="4"
+            cols={`${isMobile?20:"50"}`}
+            maxlength="200"
+            value={comment}
+            onChange={(e) => setComment(e.target.value)}
+            style={{
+              padding: "10px 20px",
+            }}
+            placeholder="Add a comment..."
+          />
+
+          <button
+            type="submit"
+            style={{
+              backgroundColor: "#3C76D2",
+              color: "white",
+              padding: "10px 50px",
+              border: "none",
+              marginLeft: "20px",
+            }}
+          >
+            Add Comment
+          </button>
+        </form>
+
         {comments.length > 0 ? (
           comments.map((comment) => (
             <div
@@ -186,40 +222,7 @@ const BlogDetail = () => {
         ) : (
           <p>No comments yet.</p>
         )}
-        <form
-          onSubmit={handleSubmit}
-          style={{
-            marginTop: "10px",
-            display: "flex",
-            alignItems: "baseline",
-            justifyItems: "end",
-          }}
-        >
-          <textarea
-            rows="4"
-            cols="50"
-            maxlength="200"
-            value={comment}
-            onChange={(e) => setComment(e.target.value)}
-            style={{
-              color: "#3C76D2",
-              padding: "10px 20px",
-            }}
-          />
-
-          <button
-            type="submit"
-            style={{
-              backgroundColor: "#3C76D2",
-              color: "white",
-              padding: "10px 50px",
-              border: "none",
-              marginLeft: "20px",
-            }}
-          >
-            Add Comment
-          </button>
-        </form>
+        
       </div>
 
     </>

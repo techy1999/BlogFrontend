@@ -76,7 +76,7 @@ export default function BlogCard({
           maxHeight:"500px",
           margin: "auto",
           mt: 2,
-          padding: 2,
+          p:1,
           boxShadow: "5px 5px 5px #ccc",
           ":hover": {
             boxShadow: "10px 10px 10px #ccc",
@@ -114,7 +114,13 @@ export default function BlogCard({
             alt="Paella dish"
           />
           <CardContent>
-            <Typography paragraph color="text.secondary">
+            <Typography paragraph color="text.secondary" style={{
+            overflow: "hidden", // Hide overflow content
+            textOverflow: "ellipsis", // Show ellipsis for overflow content
+            display: "-webkit-box",
+            WebkitLineClamp: 5, // Limit to 5 lines of text
+            WebkitBoxOrient: "vertical",
+          }}>
               {content}
             </Typography>
           </CardContent>
