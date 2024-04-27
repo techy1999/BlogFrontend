@@ -6,7 +6,13 @@ import CommentIcon from '@mui/icons-material/Comment';
 import SimpleSnackbar from './../components/common/SnackBar';
 import {SNACKBAR_SEVERITY} from '../constants/common/all.constants'
 
+import {
+  useMediaQuery,
+} from "@mui/material";
+
 const BlogDetail = () => {
+   // Media query for detecting small screens (mobile devices)
+   const isMobile = useMediaQuery("(max-width:600px)");
   const navigate = useNavigate();
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState(""); // State for Snackbar message
@@ -165,11 +171,12 @@ const BlogDetail = () => {
             display: "flex",
             alignItems: "baseline",
             justifyItems: "end",
+            flexDirection:`${isMobile?"column":""}`,
           }}
         >
           <textarea
             rows="4"
-            cols="50"
+            cols={`${isMobile?20:"50"}`}
             maxlength="200"
             value={comment}
             onChange={(e) => setComment(e.target.value)}

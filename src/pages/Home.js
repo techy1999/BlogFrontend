@@ -11,7 +11,7 @@ import engineeringService from './../assets/undraw_engineering_team.svg';
 import contactUs from './../assets/undraw_contact_us.svg';
 import { contactUsPost } from '../services/home/contactus.service'; // Import the contactUs function from the service file
 import SimpleSnackbar from './../components/common/SnackBar';
-import {SNACKBAR_SEVERITY} from '../constants/common/all.constants'
+import { SNACKBAR_SEVERITY } from '../constants/common/all.constants'
 
 const Content = styled('div')({
     display: 'flex',
@@ -39,10 +39,10 @@ const Home = () => {
     const [snackbarMessage, setSnackbarMessage] = useState(""); // State for Snackbar message
     const [severity, setSeverity] = useState(SNACKBAR_SEVERITY.SUCCESS);
 
-    const [messageObj,setMessageObj] = useState({
-        subject:"",
-        email:"",
-        message:"",
+    const [messageObj, setMessageObj] = useState({
+        subject: "",
+        email: "",
+        message: "",
     })
 
     const handleContactUs = (event) => {
@@ -59,31 +59,31 @@ const Home = () => {
         try {
             const res = await contactUsPost(messageObj);
             setSeverity(SNACKBAR_SEVERITY.SUCCESS)
-            setOpenSnackbar(true); 
+            setOpenSnackbar(true);
             setSnackbarMessage("Message Sent succesful");
         } catch (error) {
             console.log("error ", error);
             setSeverity(SNACKBAR_SEVERITY.ERROR)
-            setOpenSnackbar(true); 
+            setOpenSnackbar(true);
             setSnackbarMessage("Something went wrong !!");
         }
-       
+
         setMessageObj({
             subject: "",
             email: "",
             message: ""
         });
     }
-    
+
 
     return (
         <>
-         <SimpleSnackbar 
-        open={openSnackbar} 
-        setOpen={setOpenSnackbar} 
-        message={snackbarMessage} 
-        severity={severity}
-      />
+            <SimpleSnackbar
+                open={openSnackbar}
+                setOpen={setOpenSnackbar}
+                message={snackbarMessage}
+                severity={severity}
+            />
             <Container>
                 <Grid container spacing={4} mt={4}>
                     <Grid item xs={12} md={6}>
@@ -288,7 +288,13 @@ const Home = () => {
                 </Grid>
 
 
-                <Grid container spacing={4} mt={4}>
+                <Grid container spacing={4} mt={4}
+                    display={"flex"}
+                    alignItems={"center"}
+                    justifyContent={"center"}
+                    margin="auto"
+
+                    >
                     <Grid item xs={12} md={6}>
                         <Image
                             src={contactUs}
@@ -331,11 +337,11 @@ const Home = () => {
                                         onChange={handleContactUs}
                                         required
                                     />
-                                      <TextareaAutosize
+                                    <TextareaAutosize
                                         placeholder="Message"
                                         name="message"
                                         type={"text"}
-                                        style={{marginTop:"20px",width:"100%",padding:"10px"}}
+                                        style={{ marginTop: "20px", width: "100%", padding: "10px" }}
                                         value={messageObj.message}
                                         onChange={handleContactUs}
                                         minRows={5}
