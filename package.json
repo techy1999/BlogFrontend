@@ -29,8 +29,8 @@
     "eject": "react-scripts eject",
     "prepare": "husky install"
   },
-  "lint-staged":{
-    "**/*.{js,jsx,ts,tsx}":[
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx}": [
       "npx prettier --write",
       "npx eslint --fix"
     ]
