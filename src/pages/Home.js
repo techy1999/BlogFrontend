@@ -293,7 +293,7 @@ const Home = () => {
                     alignItems={"center"}
                     justifyContent={"center"}
                     margin="auto"
-
+                    maxWidth="100%"
                     >
                     <Grid item xs={12} md={6}>
                         <Image
