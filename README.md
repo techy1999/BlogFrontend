@@ -1,6 +1,6 @@
 <h1 align="center"> ✨Nomads.solutions ✨ </h1>
 
-[![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
+ [![Node.js CI](https://github.com/techy1999/BlogFrontend/actions/workflows/node.js.yml/badge.svg)](https://github.com/techy1999/BlogFrontend/actions/workflows/node.js.yml)
 
 ### About
 ```nomads.solution``` is upcoming project for learner to learn new skill. Technical contribution to project. Writing blog and many other thing are under pipeline.
