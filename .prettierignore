@@ -1,0 +1,7 @@
+# Ignore artifacts:
+.github
+coverage
+node_modules
+public
+build
+dist
