@@ -1,6 +1,6 @@
 <h1 align="center"> ✨Nomads.solutions ✨ </h1>
 
- [![Node.js CI](https://github.com/techy1999/BlogFrontend/actions/workflows/node.js.yml/badge.svg)](https://github.com/techy1999/BlogFrontend/actions/workflows/node.js.yml)
+[![React CI](https://github.com/techy1999/BlogFrontend/actions/workflows/node.js.yml/badge.svg?branch=main)](https://github.com/techy1999/BlogFrontend/actions/workflows/node.js.yml)
 
 ### About
 ```nomads.solution``` is upcoming project for learner to learn new skill. Technical contribution to project. Writing blog and many other thing are under pipeline.
