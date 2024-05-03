@@ -10,10 +10,8 @@ import FaceIcon from '@mui/icons-material/Face';
 import EmailIcon from '@mui/icons-material/Email';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import {
-  Box,
   useMediaQuery,
-  Typography,
-  Divider
+  Divider,
 } from "@mui/material";
 
 const BlogDetail = () => {
@@ -208,6 +206,8 @@ const BlogDetail = () => {
               padding: "10px 50px",
               border: "none",
               marginLeft: "20px",
+              borderRadius:"10px",
+              marginTop:"10px"
             }}
           >
             Add Comment
@@ -220,17 +220,25 @@ const BlogDetail = () => {
               key={comment._id}
               style={{
                 padding: "10px",
-                marginTop: "2px",
+                marginTop: "20px",
                 marginBottom: "2px",
+                width: `${isMobile? "100%" : "80%"}`,
+                borderRadius:"20px",
+                border:"1px solid  #ccc",
+                boxShadow:"5px 5px 10px #1976D2"
               }}
             >
-              <p style={{ color: "yellow", background: "black", padding: "5px" }}>
-                {comment?.content}
+              <p style={{ color: "black", padding: "5px" }}>
+                <CommentIcon />  {comment?.content}
               </p>
-              <p>
-                By: {comment.author.name} , {comment.author.email}
+              <Divider variant="middle" />
+              <p style={{paddingTop:"10px"}}>
+                <Chip icon={<FaceIcon />} label={"By : " + comment.author.name + ", " + comment.author.email} color="primary"/>
               </p>
-              <p>Created At: {comment.createdAt}</p>
+              <p  style={{paddingTop:"10px", paddingBottom:"10px"}}>
+              <Chip icon={<AccessTimeIcon />} label={"Created At : " + comment.createdAt } color="primary"/>
+              </p>
+             
             </div>
           ))
         ) : (
