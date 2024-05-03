@@ -159,8 +159,13 @@ export default function UserBlog({
           <Typography variant="h4" color="text.primary">
             {title}
           </Typography>
-          <Typography paragraph color="text.secondary">
-            {content}
+          <Typography paragraph color="text.secondary" 
+               dangerouslySetInnerHTML={{
+                __html:
+                content
+              }}
+            >
+            
           </Typography>
         </CardContent>
 

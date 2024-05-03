@@ -120,8 +120,10 @@ export default function BlogCard({
             display: "-webkit-box",
             WebkitLineClamp: 5, // Limit to 5 lines of text
             WebkitBoxOrient: "vertical",
-          }}>
-              {content}
+            }}
+            dangerouslySetInnerHTML={{ __html: content }}
+          >
+              {/* {content} */}
             </Typography>
           </CardContent>
         </Link>
@@ -137,7 +139,12 @@ export default function BlogCard({
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
-            <Typography paragraph>{content}</Typography>
+            <Typography 
+              paragraph
+              dangerouslySetInnerHTML={{ __html: content }}
+            >
+              {/* {content} */}
+              </Typography>
           </CardContent>
         </Collapse>
         <CardHeader

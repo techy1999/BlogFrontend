@@ -1,15 +1,18 @@
-import React, { useState } from "react";
+import React, { useState,useRef } from "react";
 import { Box, Typography, TextField, Button, Grid ,Divider, useMediaQuery} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 import { InputLabel } from "@mui/material";
 import SimpleSnackbar from './../components/common/SnackBar';
 import {SNACKBAR_SEVERITY} from '../constants/common/all.constants'
+import JoditEditor from "jodit-react";
+
 const CreateBlog = () => {
 
+  const editor = useRef(null);
+	const [content, setContent] = useState('');
   // Media query for detecting small screens (mobile devices)
   const isMobile = useMediaQuery("(max-width:600px)");
 
@@ -22,7 +25,6 @@ const CreateBlog = () => {
 
   const [inputs, setInputs] = useState({
     title: "",
-    content: "",
     image_url: "",
     video_url: "",
   });
@@ -45,7 +47,10 @@ const CreateBlog = () => {
           ? `${process.env.REACT_APP_DEV_URL}/blog`
           : `${process.env.REACT_APP_PROD_URL}/blog`
         }`,
-        inputs,
+        {
+          ...inputs,
+          content:content
+        },
         {
           headers: {
             "content-type": "application/json",
@@ -128,7 +133,8 @@ const CreateBlog = () => {
             </Grid>
             <Grid item xs={12}>
               <InputLabel sx={{ marginBottom: 1 }}>Content </InputLabel>
-              <TextareaAutosize
+              {/* Todo : After working for some day with new editor */}
+              {/* <TextareaAutosize
                 placeholder="Enter the Content"
                 name="content"
                 value={inputs.content}
@@ -138,6 +144,11 @@ const CreateBlog = () => {
                 sx={{ width: "100%", marginTop: 3}}
                 style={{ padding:"10px"}}
                 required
+              /> */}
+              <JoditEditor 
+                ref={editor}
+                value={content}
+                onChange={newContent => setContent(newContent)}
               />
             </Grid>
             <Grid item xs={12}>

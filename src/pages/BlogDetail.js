@@ -149,8 +149,8 @@ const BlogDetail = () => {
             paddingTop: "10px",
             paddingBottom: "20px",
           }}
+          dangerouslySetInnerHTML={{ __html: blog.content }}
         >
-          {blog.content}
         </p>
 
         {blog.video_url && (
