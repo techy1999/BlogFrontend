@@ -128,7 +128,7 @@ const Home = () => {
                                 nihil, eveniet aliquid culpa officia aut! Impedit sit sunt quaerat, odit,
                                 tenetur error, harum nesciunt ipsum debitis quas aliquid. Reprehenderit,
                                 quia. Quo neque error repudiandae fuga? Ipsa laudantium molestias eos.
-                                <Typography variant="h6">   Responsiblity of team <span style={{ color: "#1976D2" }}>at Nomads ?</span> </Typography>
+                                <Typography style={{ fontWeight:"500", fontSize:"1.25rem", lineHeight:"1.6", letterSpacing:"0.0075em" }} >   Responsiblity of team <span style={{ color: "#1976D2" }}>at Nomads ?</span> </Typography>
                             </Typography>
                         </Content>
                     </Grid>
@@ -159,7 +159,7 @@ const Home = () => {
                                 src={Team1}
                                 sx={{ width: 200, height: 150 }}
                             />
-                            <Typography variant="h6" mt={4}>
+                            <Typography variant="h3" mt={4} style={{ fontWeight:"500", fontSize:"1.25rem", lineHeight:"1.6", letterSpacing:"0.0075em" }}>
                                 Arun Pandit, <span style={{ color: "#1976D2" }}>Founder && CE0</span>
                             </Typography>
 
@@ -181,7 +181,7 @@ const Home = () => {
                                 src={Team1}
                                 sx={{ width: 200, height: 150 }}
                             />
-                            <Typography variant="h6" mt={4}>
+                            <Typography variant="h3" mt={4} style={{ fontWeight:"500", fontSize:"1.25rem", lineHeight:"1.6", letterSpacing:"0.0075em" }}>
                                 Shradha Patiel, <span style={{ color: "#1976D2" }}>Marketing Head &&  Co-founder</span>
                             </Typography>
                             <Typography variant="body1" mt={2}>
@@ -200,7 +200,7 @@ const Home = () => {
                                 src={Team1}
                                 sx={{ width: 200, height: 150 }}
                             />
-                            <Typography variant="h6" mt={4}>
+                            <Typography variant="h3" mt={4} style={{ fontWeight:"500", fontSize:"1.25rem", lineHeight:"1.6", letterSpacing:"0.0075em" }} >
                                 Piyush raj, <span style={{ color: "#1976D2" }}>Content Course Management </span>
                             </Typography>
 
@@ -231,7 +231,7 @@ const Home = () => {
                                 src={engineeringService}
                                 sx={{ width: 200, height: 150 }}
                             />
-                            <Typography variant="h6" mt={4}>
+                            <Typography variant="h3" style={{ fontWeight:"500", fontSize:"1.25rem", lineHeight:"1.6", letterSpacing:"0.0075em" }} mt={4}>
                                 Software Project, <span style={{ color: "#1976D2" }}>Handling</span>
                             </Typography>
 
@@ -253,7 +253,7 @@ const Home = () => {
                                 src={engineeringService}
                                 sx={{ width: 200, height: 150 }}
                             />
-                            <Typography variant="h6" mt={4}>
+                            <Typography variant="h3" style={{ fontWeight:"500", fontSize:"1.25rem", lineHeight:"1.6", letterSpacing:"0.0075em" }} mt={4}>
                                 Learning Material, <span style={{ color: "#1976D2" }}>Platform</span>
                             </Typography>
                             <Typography variant="body1" mt={2}>
@@ -272,7 +272,7 @@ const Home = () => {
                                 src={engineeringService}
                                 sx={{ width: 200, height: 150 }}
                             />
-                            <Typography variant="h6" mt={4}>
+                            <Typography variant="h3" style={{ fontWeight:"500", fontSize:"1.25rem", lineHeight:"1.6", letterSpacing:"0.0075em" }} mt={4}>
                                 Blog , <span style={{ color: "#1976D2" }}>page provider </span>
                             </Typography>
 
