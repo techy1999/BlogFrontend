@@ -124,7 +124,7 @@ const BlogDetail = () => {
       <div
         className="container"
         style={{
-          width: "60%",
+          width: `${isMobile? "85%" : "60%"}`,
           margin: "auto",
           paddingTop: "20px",
           paddingBottom: "20px",
