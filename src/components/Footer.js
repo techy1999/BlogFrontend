@@ -32,6 +32,7 @@ const Footer = () => {
         variant="outlined"
       >
         <Fab
+        aria-label="back to top - button"
           variant="circular"
           color="primary"
           sx={{
@@ -89,16 +90,16 @@ const Footer = () => {
               }}
             >
               <Box>
-                <IconButton color="white">
+                <IconButton aria-label="social media link - YouTube" color="white">
                   <YouTubeIcon />
                 </IconButton>
-                <IconButton color="white">
+                <IconButton aria-label="social media link - LinkedIn" color="white">
                   <LinkedInIcon />
                 </IconButton>
-                <IconButton color="white">
+                <IconButton aria-label="social media link - Instagram" color="white">
                   <InstagramIcon />
                 </IconButton>
-                <IconButton color="white">
+                <IconButton aria-label="social media link - Facebook" color="white">
                   <FacebookIcon />
                 </IconButton>
               </Box>
