@@ -5,9 +5,13 @@ import { useNavigate } from "react-router-dom";
 import CommentIcon from '@mui/icons-material/Comment';
 import SimpleSnackbar from './../components/common/SnackBar';
 import {SNACKBAR_SEVERITY} from '../constants/common/all.constants'
-
+import Chip from '@mui/material/Chip';
+import FaceIcon from '@mui/icons-material/Face';
+import EmailIcon from '@mui/icons-material/Email';
+import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import {
   useMediaQuery,
+  Divider,
 } from "@mui/material";
 
 const BlogDetail = () => {
@@ -159,10 +163,18 @@ const BlogDetail = () => {
             Sorry, your browser doesn't support embedded videos.
           </video>
         )}
-        <p>Author: {blog.author.name}</p>
-        <p>Email: {blog.author.email}</p>
-        <p>Created At: {blog.createdAt}</p>
-        <h2 style={{ marginBottom: "10px", marginTop: "10px" }}> <CommentIcon /> Comments</h2>
+
+        <p style={{paddingTop:"10px"}}>
+          <Chip icon={<FaceIcon />} label={"Author : " + blog.author.name} color="primary"/>
+          </p>
+        <p style={{paddingTop:"10px"}}>
+          <Chip icon={<EmailIcon />} label={"Email : " + blog.author.email} color="primary"/>
+          </p>
+        <p style={{paddingTop:"10px" , paddingBottom:"20px"}}>
+          <Chip icon={<AccessTimeIcon />} label={"Created At : " + blog.createdAt} color="primary"/>
+          </p>
+          <Divider variant="middle" component="p" />
+        <h2 style={{ marginBottom: "10px", marginTop: "30px" }}> <CommentIcon /> Comments </h2>
 
         <form
           onSubmit={handleSubmit}
@@ -194,6 +206,8 @@ const BlogDetail = () => {
               padding: "10px 50px",
               border: "none",
               marginLeft: "20px",
+              borderRadius:"10px",
+              marginTop:"10px"
             }}
           >
             Add Comment
@@ -206,17 +220,25 @@ const BlogDetail = () => {
               key={comment._id}
               style={{
                 padding: "10px",
-                marginTop: "2px",
+                marginTop: "20px",
                 marginBottom: "2px",
+                width: `${isMobile? "100%" : "80%"}`,
+                borderRadius:"20px",
+                border:"1px solid  #ccc",
+                boxShadow:"5px 5px 10px #1976D2"
               }}
             >
-              <p style={{ color: "yellow", background: "black", padding: "5px" }}>
-                {comment?.content}
+              <p style={{ color: "black", padding: "5px" }}>
+                <CommentIcon />  {comment?.content}
               </p>
-              <p>
-                By: {comment.author.name} , {comment.author.email}
+              <Divider variant="middle" />
+              <p style={{paddingTop:"10px"}}>
+                <Chip icon={<FaceIcon />} label={"By : " + comment.author.name + ", " + comment.author.email} color="primary"/>
               </p>
-              <p>Created At: {comment.createdAt}</p>
+              <p  style={{paddingTop:"10px", paddingBottom:"10px"}}>
+              <Chip icon={<AccessTimeIcon />} label={"Created At : " + comment.createdAt } color="primary"/>
+              </p>
+             
             </div>
           ))
         ) : (
