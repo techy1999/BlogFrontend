@@ -19,6 +19,7 @@ import DialogActions from "@mui/material/DialogActions";
 import { Button, TextField } from "@mui/material";
 import AlertContainer from "./common/AlertContainer";
 import Tooltip from "@mui/material/Tooltip";
+import ConfirmationModel from "./common/ConfirmationModel";
 
 export default function UserBlog({
   title,
@@ -30,6 +31,7 @@ export default function UserBlog({
   updatedAt,
 }) {
   const isMobile = useMediaQuery("(max-width:600px)");
+  const [confirmationModelOpen, setConfirmationModelOpen] = React.useState(false);
   const [responseSuccessData, setResponseSuccessData] = React.useState(false);
   const [responseFailedData, setResponseFailedData] = React.useState(false);
   const [editDialogOpen, setEditDialogOpen] = React.useState(false);
@@ -59,7 +61,7 @@ export default function UserBlog({
         }
       );
       if (data?.success) {
-        alert("Blog delete successful !");
+        setConfirmationModelOpen(!confirmationModelOpen);
         window.location.reload();
       }
     } catch (error) {
@@ -73,26 +75,30 @@ export default function UserBlog({
       const authToken = localStorage.getItem("token");
 
       // Make the API call to update the blog
-      const { data } = await axios.put(
-        // `http://localhost:8000/api/blog/${blogId}`,
-        `${process.env.REACT_APP_ENVIRONMENT === "development"
-        ? `${process.env.REACT_APP_DEV_URL}/blog/${blogId}`
-        : `${process.env.REACT_APP_PROD_URL}/blog/${blogId}`
-        }`,
-        updatedBlogData,
-        {
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          },
-        }
-      );
 
-      // If the API call is successful, alert the user and reload the page
-      if (data?.success) {
-        alert("Blog update successful!");
-        setResponseSuccessData(true);
-        window.location.reload();
-      }
+
+        const { data } = await axios.put(
+          // `http://localhost:8000/api/blog/${blogId}`,
+          `${process.env.REACT_APP_ENVIRONMENT === "development"
+          ? `${process.env.REACT_APP_DEV_URL}/blog/${blogId}`
+          : `${process.env.REACT_APP_PROD_URL}/blog/${blogId}`
+          }`,
+          updatedBlogData,
+          {
+            headers: {
+              Authorization: `Bearer ${authToken}`,
+            },
+          }
+        );
+  
+        // If the API call is successful, alert the user and reload the page
+        if (data?.success) {
+          // alert("Blog update successful!");
+          setConfirmationModelOpen(!confirmationModelOpen);
+          setResponseSuccessData(true);
+          window.location.reload();
+        }
+      
     } catch (error) {
       setResponseFailedData(true);
       console.log("User Error", error);
@@ -120,6 +126,14 @@ export default function UserBlog({
         onClose={() => setResponseFailedData(false)}
       />
 
+      {/* <button onClick={()=> setConfirmationModelOpen(!confirmationModelOpen)} >Set</button> */}
+      <ConfirmationModel
+          message={"Are you sure you want to delete this blog ? "} 
+          confirmationModelOpen={confirmationModelOpen} 
+          setConfirmationModelOpen={setConfirmationModelOpen} 
+          handleDelete={ () => deleteBlog(blogId)}
+          blogId={blogId}
+        /> 
       <Card
         sx={{
           width: `${isMobile?"88%":"50%"}`,
@@ -177,7 +191,7 @@ export default function UserBlog({
           </Tooltip>
           <Tooltip title="Delete">
             <IconButton aria-label="delete">
-              <DeleteIcon onClick={() => deleteBlog(blogId)} />
+              <DeleteIcon onClick={() =>{setConfirmationModelOpen(!confirmationModelOpen)} } />
             </IconButton>
           </Tooltip>
         </CardActions>
