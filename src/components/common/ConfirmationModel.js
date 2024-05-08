@@ -4,34 +4,30 @@ import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
 import Box from  "@mui/material/Box"
 import CloseIcon from '@mui/icons-material/Close';
 
-export default function ConfirmationModel({ message, btn1, btn2,openModel,setOpenModel }) {
-  const [open,setOpen ] = React.useState(true);
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
-
+export default function ConfirmationModel({ message,confirmationModelOpen, setConfirmationModelOpen,handleDelete,blogId }) {
+ 
   const handleClose = () => {
-    setOpen(false);
+    setConfirmationModelOpen(!confirmationModelOpen);
   };
 
   return (
     <>
-      <Button variant="outlined" onClick={handleClickOpen}>
-        Open alert dialog
-      </Button>
+
       <Dialog
-        open={open}
+        open={confirmationModelOpen}
         onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
 
       >
-        <Box  p={4}>
+        <Box  p={4} sx={{  boxShadow: "5px 5px 5px #ccc",
+          ":hover": {
+            boxShadow: "10px 10px 10px #ccc",
+          },}}>
           <CloseIcon sx={{float:"right", marginBottom:"10px", fontSize:"20px", cursor:"pointer"}}  onClick={handleClose}/>
           <DialogContent>
             <DialogContentText id="alert-dialog-description">
@@ -39,8 +35,13 @@ export default function ConfirmationModel({ message, btn1, btn2,openModel,setOpe
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose}>{btn1}</Button>
-            <Button onClick={handleClose} autoFocus>{btn2}</Button>
+            <Button variant='contained' onClick={
+              ()=>{
+                handleDelete(blogId);
+                handleClose();
+              }
+            } autoFocus>Yes</Button>
+            <Button variant='contained' onClick={handleClose} >No</Button>
           </DialogActions>
         </Box>
 
