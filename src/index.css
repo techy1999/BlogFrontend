@@ -3,7 +3,6 @@
   padding: 0;
   box-sizing: border-box;
 }
-
 body {
   font-family: "roboto", sans-serif;
   min-height: 100vh;
@@ -11,4 +10,19 @@ body {
 
 a {
   text-decoration: none;
+}
+
+
+/* temperary */
+/* it is not good practice - it is better to wrap entire app with parent container */
+/* for example div with className app and role as application  */
+/* check it */
+#root{
+  display: flex;
+  flex-direction: column;
+  min-height: inherit;
+}
+
+footer{
+  margin-top: auto!important;
 }
