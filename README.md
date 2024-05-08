@@ -44,7 +44,7 @@
     REACT_APP_PROD_URL="https://www.nomads.solutions/api"
     REACT_APP_ENVIRONMENT="production" #Change it to "development" for local development testing.
     ```
-- To start the project run command ```npm start```
+- To start the project run command ```npm start``` or to start with backend also running on local use ```npm run dev``` 
 - Try to access the website in browser ```http://localhost:3000/```
 
 # How to contribute and guidelines
