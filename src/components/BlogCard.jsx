@@ -34,7 +34,7 @@ export default function BlogCard({
       "handleLikes 123333",
       process.env.REACT_APP_ENVIRONMENT,
       process.env.REACT_APP_DEV_URL,
-      process.env.REACT_APP_PROD_UR
+      process.env.REACT_APP_PROD_UR,
     );
     try {
       //pass auth token and verify...
@@ -56,7 +56,7 @@ export default function BlogCard({
           headers: {
             Authorization: "Bearer " + authToken,
           },
-        }
+        },
       );
 
       if (data?.success) {
@@ -73,10 +73,10 @@ export default function BlogCard({
       <Card
         sx={{
           width: "100%",
-          maxHeight:"500px",
+          maxHeight: "500px",
           margin: "auto",
           mt: 2,
-          p:1,
+          p: 1,
           boxShadow: "5px 5px 5px #ccc",
           ":hover": {
             boxShadow: "10px 10px 10px #ccc",
@@ -114,15 +114,18 @@ export default function BlogCard({
             alt="Paella dish"
           />
           <CardContent>
-            <Typography paragraph color="text.secondary" style={{
-            overflow: "hidden", // Hide overflow content
-            textOverflow: "ellipsis", // Show ellipsis for overflow content
-            display: "-webkit-box",
-            WebkitLineClamp: 5, // Limit to 5 lines of text
-            WebkitBoxOrient: "vertical",
-            }}
-            dangerouslySetInnerHTML={{ __html: content }}
-          >
+            <Typography
+              paragraph
+              color="text.secondary"
+              style={{
+                overflow: "hidden", // Hide overflow content
+                textOverflow: "ellipsis", // Show ellipsis for overflow content
+                display: "-webkit-box",
+                WebkitLineClamp: 5, // Limit to 5 lines of text
+                WebkitBoxOrient: "vertical",
+              }}
+              dangerouslySetInnerHTML={{ __html: content }}
+            >
               {/* {content} */}
             </Typography>
           </CardContent>
@@ -139,12 +142,9 @@ export default function BlogCard({
         </CardActions>
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
-            <Typography 
-              paragraph
-              dangerouslySetInnerHTML={{ __html: content }}
-            >
+            <Typography paragraph dangerouslySetInnerHTML={{ __html: content }}>
               {/* {content} */}
-              </Typography>
+            </Typography>
           </CardContent>
         </Collapse>
         <CardHeader

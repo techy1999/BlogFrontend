@@ -1,9 +1,9 @@
-import Pagination from '@mui/material/Pagination';
-import Stack from '@mui/material/Stack';
+import Pagination from "@mui/material/Pagination";
+import Stack from "@mui/material/Stack";
 
 export function BasicPagination({ page, onChange }) {
   const handlePageChange = (event, value) => {
-    onChange(value); // Call 
+    onChange(value); // Call
   };
 
   return (
