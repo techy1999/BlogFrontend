@@ -14,23 +14,23 @@ const MyBlog = () => {
       console.log("authToken", authToken, typeof authToken);
       const { data } = await axios.get(
         // "http://localhost:8000/api/my-blog",
-        `${process.env.REACT_APP_ENVIRONMENT === "development"
-          ? `${process.env.REACT_APP_DEV_URL}/my-blog`
-          : `${process.env.REACT_APP_PROD_URL}/my-blog`
+        `${
+          process.env.REACT_APP_ENVIRONMENT === "development"
+            ? `${process.env.REACT_APP_DEV_URL}/my-blog`
+            : `${process.env.REACT_APP_PROD_URL}/my-blog`
         }`,
         {
           headers: {
             Authorization: "Bearer " + authToken,
           },
-        }
+        },
       );
       if (data?.success) {
         console.log("Userdata", data.data);
-     
+
         setUserBlogs(data?.data);
       }
     } catch (error) {
-    
       console.log("User Error", error);
     }
   };
@@ -40,7 +40,6 @@ const MyBlog = () => {
   }, []);
   return (
     <>
-
       {userBlogs.length != 0 &&
         userBlogs.map((userBlog) => (
           <>

@@ -1,11 +1,17 @@
 import React, { useState } from "react";
-import { Box, Typography, TextField, Button,useMediaQuery } from "@mui/material";
+import {
+  Box,
+  Typography,
+  TextField,
+  Button,
+  useMediaQuery,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import {  toast } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import SimpleSnackbar from '../components/common/SnackBar';
-import {SNACKBAR_SEVERITY} from '../constants/common/all.constants'
+import SimpleSnackbar from "../components/common/SnackBar";
+import { SNACKBAR_SEVERITY } from "../constants/common/all.constants";
 const Register = () => {
   const isMobile = useMediaQuery("(max-width:600px)");
 
@@ -15,7 +21,7 @@ const Register = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState(""); // State for Snackbar message
   const [severity, setSeverity] = useState(SNACKBAR_SEVERITY.SUCCESS);
-  
+
   const notify = () => toast(loginResponse);
 
   //state
@@ -58,27 +64,29 @@ const Register = () => {
             "Content-Type": "application/json",
             "Access-Control-Allow-Origin": "*",
           },
-        }
+        },
       );
-      setSeverity(SNACKBAR_SEVERITY.SUCCESS)
-      setOpenSnackbar(true); 
+      setSeverity(SNACKBAR_SEVERITY.SUCCESS);
+      setOpenSnackbar(true);
       setSnackbarMessage("Registered successful ! Thank you ");
       setLoginResponse(data.data);
       navigate("/");
     } catch (error) {
-      setSeverity(SNACKBAR_SEVERITY.ERROR)
-      setOpenSnackbar(true); 
-      setSnackbarMessage(error.response.data.message || error.response.statusText);
+      setSeverity(SNACKBAR_SEVERITY.ERROR);
+      setOpenSnackbar(true);
+      setSnackbarMessage(
+        error.response.data.message || error.response.statusText,
+      );
       console.log("error", error);
     }
   };
 
   return (
     <>
-    <SimpleSnackbar 
-        open={openSnackbar} 
-        setOpen={setOpenSnackbar} 
-        message={snackbarMessage} 
+      <SimpleSnackbar
+        open={openSnackbar}
+        setOpen={setOpenSnackbar}
+        message={snackbarMessage}
         severity={severity}
       />
       <form onSubmit={handleSubmit}>
@@ -93,10 +101,13 @@ const Register = () => {
           boxShadow="5px 5px 10px #1976D2"
           padding={5}
           borderRadius={10}
-          m={`${isMobile? "5%" : "auto"}`}
+          m={`${isMobile ? "5%" : "auto"}`}
         >
           <Typography
-            sx={{ textTransform: "uppercase" , textShadow: "5px 5px 10px #1976D2",}}
+            sx={{
+              textTransform: "uppercase",
+              textShadow: "5px 5px 10px #1976D2",
+            }}
             variant="h2"
             padding={3}
             textAlign="center"
@@ -107,7 +118,7 @@ const Register = () => {
             placeholder="Enter Name"
             name="name"
             type={"text"}
-            sx={{ marginTop: 3,borderRadius:"10px" }}
+            sx={{ marginTop: 3, borderRadius: "10px" }}
             value={inputs.name}
             onChange={handleChange}
             required
@@ -117,7 +128,7 @@ const Register = () => {
             placeholder="Enter Email"
             name="email"
             type={"email"}
-            sx={{ marginTop: 3 ,borderRadius:"10px"}}
+            sx={{ marginTop: 3, borderRadius: "10px" }}
             value={inputs.email}
             onChange={handleChange}
             required
@@ -127,7 +138,7 @@ const Register = () => {
             placeholder="Enter Password"
             name="password"
             type={"password"}
-            sx={{ marginTop: 3,borderRadius:"10px" }}
+            sx={{ marginTop: 3, borderRadius: "10px" }}
             value={inputs.password}
             onChange={handleChange}
             required
@@ -137,7 +148,7 @@ const Register = () => {
             placeholder="Enter Experience (Eg: 2)"
             name="experience"
             type={"number"}
-            sx={{ marginTop: 3,borderRadius:"10px" }}
+            sx={{ marginTop: 3, borderRadius: "10px" }}
             value={inputs.experience}
             onChange={handleChange}
             required
@@ -147,7 +158,7 @@ const Register = () => {
             placeholder="Enter Social Profile (Link) "
             name="social_profile"
             type={"text"}
-            sx={{ marginTop: 3,borderRadius:"10px" }}
+            sx={{ marginTop: 3, borderRadius: "10px" }}
             value={inputs.social_profile}
             onChange={handleChange}
             required

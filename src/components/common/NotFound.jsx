@@ -1,5 +1,5 @@
-import React from 'react';
-import { Box, Typography } from '@mui/material';
+import React from "react";
+import { Box, Typography } from "@mui/material";
 
 const NotFound = ({ imageUrl }) => {
   return (
@@ -8,14 +8,13 @@ const NotFound = ({ imageUrl }) => {
       alignItems="center"
       justifyContent="center"
       height="100vh"
-      flexDirection={'column'}
+      flexDirection={"column"}
     >
       <img src={imageUrl} alt="Centered Image" />
-           
-      <Typography variant="p" textAlign="center" mt={4}>
-        Page is not available <a href='/'>Go Back</a>
-     </Typography>
 
+      <Typography variant="p" textAlign="center" mt={4}>
+        Page is not available <a href="/">Go Back</a>
+      </Typography>
     </Box>
   );
 };
