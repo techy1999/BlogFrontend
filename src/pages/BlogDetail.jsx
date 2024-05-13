@@ -3,7 +3,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import CommentIcon from '@mui/icons-material/Comment';
-import SimpleSnackbar from './../components/common/SnackBar';
+import SimpleSnackbar from '../components/common/SnackBar';
 import {SNACKBAR_SEVERITY} from '../constants/common/all.constants'
 import Chip from '@mui/material/Chip';
 import FaceIcon from '@mui/icons-material/Face';

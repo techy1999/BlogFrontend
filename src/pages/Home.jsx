@@ -10,7 +10,7 @@ import Team1 from './../assets/undraw_meet_the_team.svg';
 import engineeringService from './../assets/undraw_engineering_team.svg';
 import contactUs from './../assets/undraw_contact_us.svg';
 import { contactUsPost } from '../services/home/contactus.service'; // Import the contactUs function from the service file
-import SimpleSnackbar from './../components/common/SnackBar';
+import SimpleSnackbar from '../components/common/SnackBar';
 import { SNACKBAR_SEVERITY } from '../constants/common/all.constants'
 
 const Content = styled('div')({
@@ -143,7 +143,7 @@ const Home = () => {
                 </Grid>
 
 
-                <ContentCenter >
+                <ContentCenter id="team">
                     <Typography variant="h2" mt={4}>
                         Meet our team <span style={{ color: "#1976D2" }}>at Nomads ?</span>
                     </Typography>
@@ -302,7 +302,7 @@ const Home = () => {
                             loading="lazy"
                         />
                     </Grid>
-                    <Grid item xs={12} md={6}>
+                    <Grid item xs={12} md={6} id="contact">
                         <Content>
 
                             <form >

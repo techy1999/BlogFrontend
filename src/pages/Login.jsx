@@ -4,7 +4,7 @@ import { redirect, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { authActions } from "../redux/store";
-import SimpleSnackbar from './../components/common/SnackBar';
+import SimpleSnackbar from '../components/common/SnackBar';
 import {SNACKBAR_SEVERITY} from '../constants/common/all.constants';
 import ThirdPartyAuthLogin from "../components/common/ThirdPartyAuthLogin";
 
