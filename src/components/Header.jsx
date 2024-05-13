@@ -15,7 +15,7 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { authActions } from "../redux/store";
-import SimpleSnackbar from './../components/common/SnackBar';
+import SimpleSnackbar from './common/SnackBar';
 import {SNACKBAR_SEVERITY} from '../constants/common/all.constants'
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
