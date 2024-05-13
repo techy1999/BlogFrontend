@@ -5,7 +5,7 @@ import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 import { InputLabel } from "@mui/material";
-import SimpleSnackbar from './../components/common/SnackBar';
+import SimpleSnackbar from '../components/common/SnackBar';
 import {SNACKBAR_SEVERITY} from '../constants/common/all.constants'
 import JoditEditor from "jodit-react";
 

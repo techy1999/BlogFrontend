@@ -12,6 +12,9 @@ import NotFound from "./components/common/NotFound"
 import "./App.css";
 import Home from "./pages/Home";
 import NotFoundImage from "./assets/undraw_page_not_found.svg"
+import JoinTeam from "./pages/JoinTeam";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsCondition from "./pages/TermsCondition";
 
 function App() {
   return (
@@ -26,6 +29,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile />} />
+        <Route path="/join-team" element={<JoinTeam />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/terms-condition" element={<TermsCondition />} />
          {/* Wildcard route for handling 404 errors */}
          <Route path="*" element={<NotFound imageUrl={NotFoundImage} />} />
          <Route path="/api" element={null} />

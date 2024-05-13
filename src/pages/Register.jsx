@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { Box, Typography, TextField, Button,useMediaQuery } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import {  toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import SimpleSnackbar from './../components/common/SnackBar';
+import SimpleSnackbar from '../components/common/SnackBar';
 import {SNACKBAR_SEVERITY} from '../constants/common/all.constants'
 const Register = () => {
   const isMobile = useMediaQuery("(max-width:600px)");
