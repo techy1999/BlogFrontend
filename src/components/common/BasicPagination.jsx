@@ -7,7 +7,7 @@ export function BasicPagination({ page, onChange }) {
   };
 
   return (
-    <Stack spacing={2} mt={4}>
+    <Stack spacing={2} mt={4} mb={4}>
       <Pagination count={page} color="primary" onChange={handlePageChange} />
     </Stack>
   );
