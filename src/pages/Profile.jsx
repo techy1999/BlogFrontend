@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Card, Divider, Chip, useMediaQuery, Button } from "@mui/material";
 import Grid from "@mui/material/Grid";
 import CardContent from "@mui/material/CardContent";
@@ -6,11 +7,19 @@ import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import { fetchUserProfile } from "../services/profile/profile.service";
 import ProfileDetail from "./../assets/undraw_profile_detail.svg";
+import { useDispatch } from "react-redux";
+import { SNACKBAR_SEVERITY } from "../constants/common/all.constants";
+import { authActions } from "../redux/store";
+import SimpleSnackbar from "../components/common/SnackBar";
 
 import Box from "@mui/material/Box";
 const Profile = () => {
   // Media query for detecting small screens (mobile devices)
   const isMobile = useMediaQuery("(max-width:600px)");
+  const [severity, setSeverity] = useState(SNACKBAR_SEVERITY.SUCCESS);
+  const [openSnackbar, setOpenSnackbar] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState("");
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -18,6 +27,9 @@ const Profile = () => {
     social_profile: "",
     blogOfUser: "",
   });
+
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const userProfile = async () => {
     try {
@@ -30,12 +42,44 @@ const Profile = () => {
     }
   };
 
+  const handleLogout = () => {
+    if (isMobile) {
+      setIsMobileSidebarOpen(false);
+    }
+    try {
+      dispatch(authActions.logout());
+      setSeverity(SNACKBAR_SEVERITY.SUCCESS);
+      setOpenSnackbar(true);
+      setSnackbarMessage("Logout Successful !" + "\n Bye !");
+      // setTimeout(() => {
+      navigate("/");
+      window.location.reload(); //so that user can able to logout completely.
+      // }, 1000); // Delay for 1 second (1000 milliseconds)
+    } catch (error) {
+      setSeverity(SNACKBAR_SEVERITY.ERROR);
+      setOpenSnackbar(true);
+      setSnackbarMessage(
+        error.response.data.message || error.response.statusText,
+      );
+      console.log("err", error);
+    }
+  };
+
+
+
   useEffect(() => {
     userProfile();
   }, []);
 
   return (
     <>
+    
+    <SimpleSnackbar
+        open={openSnackbar}
+        setOpen={setOpenSnackbar}
+        message={snackbarMessage}
+        severity={severity}
+      />
       <Grid
         container
         spacing={2}
@@ -144,6 +188,7 @@ const Profile = () => {
                 sx={{ margin: 1, color: "white" }}
                 href="/"
                 fullWidth
+                onClick={handleLogout}
               >
                 Logout
               </Button>
