@@ -6,12 +6,15 @@ import TextField from "@mui/material/TextField";
 import { Button, Paper, Container, Typography } from "@mui/material";
 import { Box, Grid } from "@mui/material";
 
-import { Pagination } from "@mui/material";
 import EmptyScreen from "../components/common/EmptyScreen";
 import BasicPagination from "../components/common/BasicPagination";
 import { PAGE_CONSTANT } from "../constants/common/all.constants";
+import { useLoading } from "../components/customHooks/useLoader";
+import LoaderScreen from "../components/common/LoaderScreen";
+
 
 const Blog = () => {
+  const {loading, showLoading,hideLoading} = useLoading();
   const [blogs, setBlogs] = useState([]);
   const [searchValue, setSearchValue] = useState("");
   const [pageNumber, setPageNumber] = useState(1);
@@ -19,6 +22,7 @@ const Blog = () => {
 
   const getAllBlogs = async (searchValue) => {
     try {
+      showLoading();
       if (searchValue) {
         const { data } = await axios.get(
           `${
@@ -48,6 +52,8 @@ const Blog = () => {
       }
     } catch (error) {
       console.log("Error", error);
+    } finally  {
+      hideLoading();
     }
   };
 
@@ -99,6 +105,7 @@ const Blog = () => {
         </Box>
 
         <Grid container spacing={4} mt={4}>
+        {loading && <LoaderScreen open={loading} handleClose={loading}/>}
           {blogs &&
             blogs.map((blog) => (
               <Grid item xs={12} md={4}>
