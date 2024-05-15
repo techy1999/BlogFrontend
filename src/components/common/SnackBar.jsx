@@ -3,14 +3,13 @@
             RESPONSE NOTIFICATION IN UI
 ======================================================== */
 
-import React, { useState } from 'react';
-import Snackbar from '@mui/material/Snackbar';
-import IconButton from '@mui/material/IconButton';
-import CloseIcon from '@mui/icons-material/Close';
-import { Alert } from '@mui/material';
+import React, { useState } from "react";
+import Snackbar from "@mui/material/Snackbar";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
+import { Alert } from "@mui/material";
 
-export default function SimpleSnackbar({ message, open, setOpen,severity }) {
-  
+export default function SimpleSnackbar({ message, open, setOpen, severity }) {
   const handleClose = (event, reason) => {
     setOpen(false);
   };
@@ -35,17 +34,17 @@ export default function SimpleSnackbar({ message, open, setOpen,severity }) {
         autoHideDuration={5000}
         onClose={handleClose}
         action={action}
-        anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+        anchorOrigin={{ vertical: "top", horizontal: "right" }}
       >
-          <Alert
-            onClose={handleClose}
-            severity={severity}
-            variant="filled"
-            sx={{ width: '100%' }}
-          >
-         {message}
+        <Alert
+          onClose={handleClose}
+          severity={severity}
+          variant="filled"
+          sx={{ width: "100%" }}
+        >
+          {message}
         </Alert>
-        </Snackbar>
+      </Snackbar>
     </div>
   );
 }

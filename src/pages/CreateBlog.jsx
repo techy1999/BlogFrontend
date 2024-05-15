@@ -1,18 +1,25 @@
-import React, { useState,useRef } from "react";
-import { Box, Typography, TextField, Button, Grid ,Divider, useMediaQuery} from "@mui/material";
+import React, { useState, useRef } from "react";
+import {
+  Box,
+  Typography,
+  TextField,
+  Button,
+  Grid,
+  Divider,
+  useMediaQuery,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import "react-toastify/dist/ReactToastify.css";
 import TextareaAutosize from "@mui/material/TextareaAutosize";
 import { InputLabel } from "@mui/material";
-import SimpleSnackbar from './../components/common/SnackBar';
-import {SNACKBAR_SEVERITY} from '../constants/common/all.constants'
+import SimpleSnackbar from "../components/common/SnackBar";
+import { SNACKBAR_SEVERITY } from "../constants/common/all.constants";
 import JoditEditor from "jodit-react";
 
 const CreateBlog = () => {
-
   const editor = useRef(null);
-	const [content, setContent] = useState('');
+  const [content, setContent] = useState("");
   // Media query for detecting small screens (mobile devices)
   const isMobile = useMediaQuery("(max-width:600px)");
 
@@ -21,7 +28,6 @@ const CreateBlog = () => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState(""); // State for Snackbar message
   const [severity, setSeverity] = useState(SNACKBAR_SEVERITY.SUCCESS);
-
 
   const [inputs, setInputs] = useState({
     title: "",
@@ -43,47 +49,50 @@ const CreateBlog = () => {
 
     try {
       const { data } = await axios.post(
-        `${process.env.REACT_APP_ENVIRONMENT === "development"
-          ? `${process.env.REACT_APP_DEV_URL}/blog`
-          : `${process.env.REACT_APP_PROD_URL}/blog`
+        `${
+          process.env.REACT_APP_ENVIRONMENT === "development"
+            ? `${process.env.REACT_APP_DEV_URL}/blog`
+            : `${process.env.REACT_APP_PROD_URL}/blog`
         }`,
         {
           ...inputs,
-          content:content
+          content: content,
         },
         {
           headers: {
             "content-type": "application/json",
             Authorization: "Bearer " + authToken,
           },
-        }
+        },
       );
 
       if (data?.success) {
-        setSeverity(SNACKBAR_SEVERITY.SUCCESS)
-        setOpenSnackbar(true); 
+        setSeverity(SNACKBAR_SEVERITY.SUCCESS);
+        setOpenSnackbar(true);
         setSnackbarMessage("Blog Created , SuccessFully !");
 
         navigate("/");
       } else {
-        setSeverity(SNACKBAR_SEVERITY.ERROR)
-        setOpenSnackbar(true); 
+        setSeverity(SNACKBAR_SEVERITY.ERROR);
+        setOpenSnackbar(true);
         setSnackbarMessage(data.message);
       }
     } catch (error) {
-      setSeverity(SNACKBAR_SEVERITY.ERROR)
-      setOpenSnackbar(true); 
-      setSnackbarMessage(error.response.data.message || error.response.statusText);
+      setSeverity(SNACKBAR_SEVERITY.ERROR);
+      setOpenSnackbar(true);
+      setSnackbarMessage(
+        error.response.data.message || error.response.statusText,
+      );
       console.log("error", error);
     }
   };
 
   return (
     <>
-      <SimpleSnackbar 
-        open={openSnackbar} 
-        setOpen={setOpenSnackbar} 
-        message={snackbarMessage} 
+      <SimpleSnackbar
+        open={openSnackbar}
+        setOpen={setOpenSnackbar}
+        message={snackbarMessage}
         severity={severity}
       />
       <form onSubmit={handleSubmit}>
@@ -92,11 +101,13 @@ const CreateBlog = () => {
           padding={3}
           borderRadius={5}
           boxShadow="5px 5px 10px #1976D2"
-          m={`${isMobile? "5%" : "50px auto"}`}
+          m={`${isMobile ? "5%" : "50px auto"}`}
         >
           <Typography
-            sx={{ textTransform: "uppercase",// Make the text bold
-            textShadow: "5px 5px 10px #1976D2",}} // Apply text shadow
+            sx={{
+              textTransform: "uppercase", // Make the text bold
+              textShadow: "5px 5px 10px #1976D2",
+            }} // Apply text shadow
             variant="h2"
             padding={3}
             textAlign="center"
@@ -104,8 +115,8 @@ const CreateBlog = () => {
             Add Post
           </Typography>
           <Box mt={4} mb={4}>
-              <Divider style={{ backgroundColor: "#1976D2" }} />
-            </Box>
+            <Divider style={{ backgroundColor: "#1976D2" }} />
+          </Box>
           <Grid container spacing={3}>
             <Grid item xs={12} md={6}>
               <InputLabel sx={{ marginBottom: 1 }}>Title</InputLabel>
@@ -145,10 +156,10 @@ const CreateBlog = () => {
                 style={{ padding:"10px"}}
                 required
               /> */}
-              <JoditEditor 
+              <JoditEditor
                 ref={editor}
                 value={content}
-                onChange={newContent => setContent(newContent)}
+                onChange={(newContent) => setContent(newContent)}
               />
             </Grid>
             <Grid item xs={12}>
@@ -181,7 +192,4 @@ const CreateBlog = () => {
   );
 };
 
-
-
 export default CreateBlog;
-

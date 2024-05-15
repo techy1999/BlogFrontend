@@ -80,6 +80,7 @@
                 git  push origin branch_name   #push your code
 
             ```
+           - Check for formating of code run command ```npm run format```
         6. now go to the UI ie. github.com and create a new pr 
         7. you can follow some tutorial as well [here](https://www.youtube.com/watch?v=8lGpZkjnkt4)
 

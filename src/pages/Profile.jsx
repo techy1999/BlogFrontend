@@ -1,18 +1,16 @@
 import React, { useState, useEffect } from "react";
-
-
-import { Card, Divider, Chip,useMediaQuery,Button } from "@mui/material";
-import Grid from "@mui/material/Grid"
+import { Card, Divider, Chip, useMediaQuery, Button } from "@mui/material";
+import Grid from "@mui/material/Grid";
 import CardContent from "@mui/material/CardContent";
 import Avatar from "@mui/material/Avatar";
 import Typography from "@mui/material/Typography";
 import { fetchUserProfile } from "../services/profile/profile.service";
-import ProfileDetail from './../assets/undraw_profile_detail.svg';
+import ProfileDetail from "./../assets/undraw_profile_detail.svg";
 
-import Box from "@mui/material/Box"
+import Box from "@mui/material/Box";
 const Profile = () => {
   // Media query for detecting small screens (mobile devices)
- const isMobile = useMediaQuery("(max-width:600px)");
+  const isMobile = useMediaQuery("(max-width:600px)");
   const [user, setUser] = useState({
     name: "",
     email: "",
@@ -20,7 +18,6 @@ const Profile = () => {
     social_profile: "",
     blogOfUser: "",
   });
-
 
   const userProfile = async () => {
     try {
@@ -39,13 +36,18 @@ const Profile = () => {
 
   return (
     <>
-      <Grid container spacing={2} mt={4} p={4} sx={{
-        display:"flex",
-        alignItems:"center",
-        justifyContent:"center",
-        flexDirection:"column"
-      }}>
-
+      <Grid
+        container
+        spacing={2}
+        mt={4}
+        p={4}
+        sx={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          flexDirection: "column",
+        }}
+      >
         <Grid item xs={8}>
           <Card
             sx={{
@@ -73,47 +75,81 @@ const Profile = () => {
               <Divider style={{ backgroundColor: "#1976D2" }} />
             </Box>
 
-
             <CardContent sx={{ padding: "20px" }}>
-
-              <Typography paragraph color="text.primary" >
-                <h3> <Chip sx={{ marginRight: "10px" }} avatar={<Avatar>E </Avatar>} label="Email : " />{user.email}</h3>
+              <Typography paragraph color="text.primary">
+                <h3>
+                  {" "}
+                  <Chip
+                    sx={{ marginRight: "10px" }}
+                    avatar={<Avatar>E </Avatar>}
+                    label="Email : "
+                  />
+                  {user.email}
+                </h3>
               </Typography>
               <Typography paragraph color="text.primary">
                 <h3>
-                  <Chip sx={{ marginRight: "10px" }} avatar={<Avatar>E </Avatar>} label="Experience : " />
+                  <Chip
+                    sx={{ marginRight: "10px" }}
+                    avatar={<Avatar>E </Avatar>}
+                    label="Experience : "
+                  />
                   {user.experience} in years.
                 </h3>
               </Typography>
               <Typography paragraph color="text.primary">
-
-                <h3><Chip sx={{ marginRight: "10px" }} avatar={<Avatar>S </Avatar>} label=" Social Profile : " />
+                <h3>
+                  <Chip
+                    sx={{ marginRight: "10px" }}
+                    avatar={<Avatar>S </Avatar>}
+                    label=" Social Profile : "
+                  />
                   <a href="/">{user.social_profile}</a>
                 </h3>
               </Typography>
               <Typography paragraph color="text.primary">
-
-                <h3><Chip sx={{ marginRight: "10px" }} avatar={<Avatar>T </Avatar>} label="Total Blog : " /> {user.blogOfUser}</h3>
+                <h3>
+                  <Chip
+                    sx={{ marginRight: "10px" }}
+                    avatar={<Avatar>T </Avatar>}
+                    label="Total Blog : "
+                  />{" "}
+                  {user.blogOfUser}
+                </h3>
               </Typography>
               <Typography paragraph color="text.primary">
-
-                <h3><Chip sx={{ marginRight: "10px" }} avatar={<Avatar>T </Avatar>} label="Total Blog views : " /> {user.blogOfUser}</h3>
+                <h3>
+                  <Chip
+                    sx={{ marginRight: "10px" }}
+                    avatar={<Avatar>T </Avatar>}
+                    label="Total Blog views : "
+                  />{" "}
+                  {user.blogOfUser}
+                </h3>
               </Typography>
               <Typography paragraph color="text.primary">
-
-                <h3>  <Chip sx={{ marginRight: "10px" }} avatar={<Avatar>T </Avatar>} label="Total Blog Likes : " /> {user.blogOfUser}</h3>
+                <h3>
+                  {" "}
+                  <Chip
+                    sx={{ marginRight: "10px" }}
+                    avatar={<Avatar>T </Avatar>}
+                    label="Total Blog Likes : "
+                  />{" "}
+                  {user.blogOfUser}
+                </h3>
               </Typography>
-              <Button variant="contained" color="primary" sx={{ margin: 1, color: "white" }} href="/" fullWidth>
+              <Button
+                variant="contained"
+                color="primary"
+                sx={{ margin: 1, color: "white" }}
+                href="/"
+                fullWidth
+              >
                 Logout
               </Button>
-             
             </CardContent>
-
-          
-
           </Card>
         </Grid>
-        
       </Grid>
     </>
   );
