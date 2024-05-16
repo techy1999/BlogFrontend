@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Card, useMediaQuery } from "@mui/material";
+import { Card, Divider, useMediaQuery } from "@mui/material";
 
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
@@ -8,7 +8,7 @@ import CardActions from "@mui/material/CardActions";
 import Avatar from "@mui/material/Avatar";
 import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import { red } from "@mui/material/colors";
+import { green, red } from "@mui/material/colors";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import axios from "axios";
@@ -20,7 +20,7 @@ import { Button, TextField } from "@mui/material";
 import AlertContainer from "./common/AlertContainer";
 import Tooltip from "@mui/material/Tooltip";
 import ConfirmationModel from "./common/ConfirmationModel";
-
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
 export default function UserBlog({
   title,
   content,
@@ -147,22 +147,26 @@ export default function UserBlog({
           },
         }}
       >
+          <Typography variant="h3" color="primary.main">
+            {title}
+          </Typography>
         <CardHeader
           avatar={
-            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-              Date
-            </Avatar>
+            <CalendarMonthIcon  sx={{ bgcolor: green[500] }} aria-label="recipe" />
           }
-          subheader={createdAt}
+          title={`Create at 👉  ${createdAt} `}
+          sx={{padding:0}}
         />
         <CardHeader
           avatar={
-            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-              Date
-            </Avatar>
+            <CalendarMonthIcon sx={{ bgcolor: green[500] }} aria-label="recipe">
+            </CalendarMonthIcon>
           }
-          subheader={updatedAt}
+          title={`Create at 👉  ${updatedAt} `}
+          sx={{padding:0}}
         />
+
+        <Divider sx={{marginBottom:"10px" , marginTop:"10px"}}/>
 
         <CardMedia
           component="img"
@@ -171,9 +175,7 @@ export default function UserBlog({
           alt="Paella dish"
         />
         <CardContent>
-          <Typography variant="h4" color="text.primary">
-            {title}
-          </Typography>
+        
           <Typography
             paragraph
             color="text.secondary"
