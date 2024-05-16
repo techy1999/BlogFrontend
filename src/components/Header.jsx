@@ -19,7 +19,8 @@ import SimpleSnackbar from "./common/SnackBar";
 import { SNACKBAR_SEVERITY } from "../constants/common/all.constants";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
-
+import HowToRegIcon from '@mui/icons-material/HowToReg';
+import LogoutIcon from '@mui/icons-material/Logout';
 const Header = () => {
   // Media query for detecting small screens (mobile devices)
   const isMobile = useMediaQuery("(max-width:600px)");
@@ -140,13 +141,13 @@ const Header = () => {
                     LinkComponent={Link}
                     to="/profile"
                   >
-                    Profile
+                    <HowToRegIcon color="white" fontSize="medium"/>
                   </Button>
                   <Button
                     sx={{ margin: 1, color: "white" }}
                     onClick={handleLogout}
                   >
-                    Logout
+                    <LogoutIcon color="white" fontSize="medium"/>
                   </Button>
                 </>
               )}
