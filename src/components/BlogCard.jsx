@@ -14,6 +14,13 @@ import ShareIcon from "@mui/icons-material/Share";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import Chip from "@mui/material/Chip";
+import FaceIcon from "@mui/icons-material/Face";
+import EmailIcon from "@mui/icons-material/Email";
+import { Divider } from "@mui/material";
+import '../App.css'
+
 
 export default function BlogCard({
   id,
@@ -92,7 +99,7 @@ export default function BlogCard({
               letterSpacing: "0.1em",
               lineHeight: "1.5",
               marginTop: "10px",
-              marginBottom: "5px",
+              // marginBottom: "5px",
             }}
           >
             {title}
@@ -104,16 +111,22 @@ export default function BlogCard({
               marginBottom: "15px",
             }}
           >
-            {createdAt}
+           <CalendarMonthIcon /> {createdAt}
           </Typography>
-
+          <Chip
+            icon={<EmailIcon />}
+            label={"Email : " + `${email}`}
+            color="primary"
+            sx={{marginBottom:"10px"}}
+          />
+         
           <CardMedia
             component="img"
             height="194"
             image={image}
             alt="Paella dish"
           />
-          <CardContent>
+          <CardContent sx={{padding: "0px", margin:"0px"}}>
             <Typography
               paragraph
               color="text.secondary"
@@ -121,15 +134,25 @@ export default function BlogCard({
                 overflow: "hidden", // Hide overflow content
                 textOverflow: "ellipsis", // Show ellipsis for overflow content
                 display: "-webkit-box",
-                WebkitLineClamp: 5, // Limit to 5 lines of text
+                WebkitLineClamp: 3, // Limit to 5 lines of text
                 WebkitBoxOrient: "vertical",
+                paddingTop: "10px",
               }}
+               
               dangerouslySetInnerHTML={{ __html: content }}
             >
               {/* {content} */}
             </Typography>
           </CardContent>
         </Link>
+        <Divider />
+        <CardHeader
+            avatar={
+              <FaceIcon />
+            }
+            title={`Written By 👉  ${name} `}
+            sx={{padding:0}}
+          />
         <CardActions disableSpacing>
           <span style={{ color: "red" }}> {likeCount ? likeCount : "0"}</span>
 
@@ -140,6 +163,7 @@ export default function BlogCard({
             <ShareIcon />
           </IconButton>
         </CardActions>
+        
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
             <Typography paragraph dangerouslySetInnerHTML={{ __html: content }}>
@@ -147,17 +171,8 @@ export default function BlogCard({
             </Typography>
           </CardContent>
         </Collapse>
-        <CardHeader
-          avatar={
-            <Avatar
-              sx={{ bgcolor: red[500], fontSize: "12px" }}
-              aria-label="recipe"
-            >
-              Author
-            </Avatar>
-          }
-          title={`${name} ${email}`}
-        />
+      
+           
       </Card>
     </>
   );
