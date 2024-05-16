@@ -1,3 +1,8 @@
 body {
   min-height: 100vh;
 }
+
+/* Temporary solution to remove padding bottom*/
+.css-17whpg7-MuiCardContent-root:last-child {
+   padding-bottom: 0px !important; 
+}
