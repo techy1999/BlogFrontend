@@ -20,6 +20,7 @@ import FaceIcon from "@mui/icons-material/Face";
 import EmailIcon from "@mui/icons-material/Email";
 import { Divider } from "@mui/material";
 import '../App.css'
+import ShareDialog from "./SharingDialog";
 
 
 export default function BlogCard({
@@ -35,14 +36,9 @@ export default function BlogCard({
   likeCount,
 }) {
   const [expanded, setExpanded] = React.useState(false);
+  const [shareOpen, setShareOpen] = React.useState(false);
   const navigate = useNavigate();
   const handleLikes = async () => {
-    console.log(
-      "handleLikes 123333",
-      process.env.REACT_APP_ENVIRONMENT,
-      process.env.REACT_APP_DEV_URL,
-      process.env.REACT_APP_PROD_UR,
-    );
     try {
       //pass auth token and verify...
       const authToken = localStorage.getItem("token");
@@ -74,6 +70,16 @@ export default function BlogCard({
       console.log("User Error", error);
     }
   };
+
+  const handleShareClick = () => {
+    setShareOpen(true);
+  };
+
+  const handleCloseShare = () => {
+    setShareOpen(false);
+  };
+  const shareUrl = window.location.href;
+
 
   return (
     <>
@@ -159,7 +165,7 @@ export default function BlogCard({
           <IconButton aria-label="add to favorites">
             <FavoriteIcon onClick={() => handleLikes()} />
           </IconButton>
-          <IconButton aria-label="share">
+          <IconButton aria-label="share" onClick={handleShareClick}>
             <ShareIcon />
           </IconButton>
         </CardActions>
@@ -172,8 +178,13 @@ export default function BlogCard({
           </CardContent>
         </Collapse>
       
-           
       </Card>
+      <ShareDialog
+        open={shareOpen}
+        onClose={handleCloseShare}
+        url={shareUrl}
+        title={title}
+      /> 
     </>
   );
 }
