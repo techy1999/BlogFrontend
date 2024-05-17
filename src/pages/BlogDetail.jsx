@@ -10,9 +10,12 @@ import FaceIcon from "@mui/icons-material/Face";
 import EmailIcon from "@mui/icons-material/Email";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
 import { useMediaQuery, Divider } from "@mui/material";
+import { useLoading } from "../components/customHooks/useLoader";
+import LoaderScreen from "../components/common/LoaderScreen";
 
 const BlogDetail = () => {
   // Media query for detecting small screens (mobile devices)
+  const {loading, showLoading,hideLoading} = useLoading();
   const isMobile = useMediaQuery("(max-width:600px)");
   const navigate = useNavigate();
   const [openSnackbar, setOpenSnackbar] = useState(false);
@@ -32,6 +35,7 @@ const BlogDetail = () => {
 
   const getBlog = async () => {
     try {
+      showLoading();
       // const { data } = await axios.get(`http://localhost:8000/api/blog/${id}`);
       const { data } = await axios.get(
         `${
@@ -46,10 +50,13 @@ const BlogDetail = () => {
       }
     } catch (error) {
       console.log("Error", error);
+    } finally{
+      hideLoading();
     }
   };
   const getAllCommentsOnBlog = async () => {
     try {
+      showLoading();
       const { data } = await axios.get(
         `${
           process.env.REACT_APP_ENVIRONMENT === "development"
@@ -63,6 +70,8 @@ const BlogDetail = () => {
       }
     } catch (error) {
       console.log("Error", error);
+    } finally{
+      hideLoading();
     }
   };
   useEffect(() => {
@@ -78,6 +87,7 @@ const BlogDetail = () => {
       return;
     } else {
       try {
+        showLoading();
         const { data } = await axios.post(
           // `http://localhost:8000/api/comments/${id}`,
           `${
@@ -115,6 +125,9 @@ const BlogDetail = () => {
         );
         console.log("Error", error);
       }
+      finally{
+        hideLoading();
+      }
     }
   };
 
@@ -126,6 +139,7 @@ const BlogDetail = () => {
         message={snackbarMessage}
         severity={severity}
       />
+      {loading && <LoaderScreen open={loading} handleClose={loading}/>}
       <div
         className="container"
         style={{

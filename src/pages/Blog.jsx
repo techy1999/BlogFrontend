@@ -11,7 +11,7 @@ import BasicPagination from "../components/common/BasicPagination";
 import { PAGE_CONSTANT } from "../constants/common/all.constants";
 import { useLoading } from "../components/customHooks/useLoader";
 import LoaderScreen from "../components/common/LoaderScreen";
-
+import SearchIcon from '@mui/icons-material/Search';
 
 const Blog = () => {
   const {loading, showLoading,hideLoading} = useLoading();
@@ -100,7 +100,7 @@ const Blog = () => {
             }}
           />
           <Button variant="outlined" onClick={searchHandler}>
-            Search
+            <SearchIcon />  Search
           </Button>
         </Box>
 
