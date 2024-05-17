@@ -5,10 +5,8 @@ import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import Collapse from "@mui/material/Collapse";
-import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import { red } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import { Link } from "react-router-dom";
@@ -21,7 +19,8 @@ import EmailIcon from "@mui/icons-material/Email";
 import { Divider } from "@mui/material";
 import '../App.css'
 import ShareDialog from "./SharingDialog";
-
+import SimpleSnackbar from "../components/common/SnackBar";
+import { SNACKBAR_SEVERITY } from "../constants/common/all.constants";
 
 export default function BlogCard({
   id,
@@ -37,6 +36,9 @@ export default function BlogCard({
 }) {
   const [expanded, setExpanded] = React.useState(false);
   const [shareOpen, setShareOpen] = React.useState(false);
+  const [openSnackbar, setOpenSnackbar] = React.useState(false);
+  const [snackbarMessage, setSnackbarMessage] =React.useState(""); // State for Snackbar message
+  const [severity, setSeverity] = React.useState(SNACKBAR_SEVERITY.SUCCESS);
   const navigate = useNavigate();
   const handleLikes = async () => {
     try {
@@ -63,10 +65,22 @@ export default function BlogCard({
       );
 
       if (data?.success) {
-        alert("Blog liked successful !");
+        setSeverity(SNACKBAR_SEVERITY.SUCCESS);
+        setOpenSnackbar(true);
+        setSnackbarMessage("Blog liked successful !");
         window.location.reload();
       }
+      else{
+        setSeverity(SNACKBAR_SEVERITY.ERROR);
+        setOpenSnackbar(true);
+        setSnackbarMessage(data.message);
+      }
     } catch (error) {
+      setSeverity(SNACKBAR_SEVERITY.ERROR);
+      setOpenSnackbar(true);
+      setSnackbarMessage(
+        error.response.data.message || error.response.statusText,
+      );
       console.log("User Error", error);
     }
   };
@@ -83,6 +97,12 @@ export default function BlogCard({
 
   return (
     <>
+     <SimpleSnackbar 
+        open={openSnackbar} 
+        setOpen={setOpenSnackbar} 
+        message={snackbarMessage} 
+        severity={severity}
+      />
       <Card
         sx={{
           width: "100%",
@@ -163,7 +183,7 @@ export default function BlogCard({
           <span style={{ color: "red" }}> {likeCount ? likeCount : "0"}</span>
 
           <IconButton aria-label="add to favorites">
-            <FavoriteIcon onClick={() => handleLikes()} />
+            <FavoriteIcon color="error" onClick={() => handleLikes()} />
           </IconButton>
           <IconButton aria-label="share" onClick={handleShareClick}>
             <ShareIcon />
