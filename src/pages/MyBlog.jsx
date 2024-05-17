@@ -15,7 +15,6 @@ const MyBlog = () => {
     try {
       //pass auth token and verify...
       const authToken = localStorage.getItem("token");
-      console.log("authToken", authToken, typeof authToken);
       const { data } = await axios.get(
         // "http://localhost:8000/api/my-blog",
         `${
@@ -30,8 +29,6 @@ const MyBlog = () => {
         },
       );
       if (data?.success) {
-        console.log("Userdata", data.data);
-
         setUserBlogs(data?.data);
       }
     } catch (error) {

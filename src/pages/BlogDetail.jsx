@@ -45,7 +45,6 @@ const BlogDetail = () => {
         }`,
       );
       if (data?.success) {
-        console.log("data ON DETAIL PAGE :", data);
         setBlog(data?.data);
       }
     } catch (error) {
@@ -65,7 +64,6 @@ const BlogDetail = () => {
         }`,
       );
       if (data?.success) {
-        console.log("data ON Comment PAGE :", data);
         setComments(data?.data);
       }
     } catch (error) {
@@ -114,7 +112,6 @@ const BlogDetail = () => {
             "Commnent Succesful, SuccessFully !" + "Thank you !",
           );
         } else {
-          console.log("else condtion redirect to loginpage");
           navigate("/login");
         }
       } catch (error) {
