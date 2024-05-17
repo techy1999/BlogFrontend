@@ -18,7 +18,7 @@ import { SNACKBAR_SEVERITY } from "../constants/common/all.constants";
 import JoditEditor from "jodit-react";
 import { useLoading } from "../components/customHooks/useLoader";
 import LoaderScreen from "../components/common/LoaderScreen";
-
+import PostAddIcon from '@mui/icons-material/PostAdd';
 const CreateBlog = () => {
   const {loading, showLoading,hideLoading} = useLoading();
   const editor = useRef(null);
@@ -115,11 +115,11 @@ const CreateBlog = () => {
               textTransform: "uppercase", // Make the text bold
               textShadow: "5px 5px 10px #1976D2",
             }} // Apply text shadow
-            variant="h2"
-            padding={3}
+            variant="h3"
+            paddingTop={3}
             textAlign="center"
           >
-            Add Post
+            <PostAddIcon fontSize="large"/> Add Post
           </Typography>
           <Box mt={4} mb={4}>
             <Divider style={{ backgroundColor: "#1976D2" }} />
@@ -166,6 +166,7 @@ const CreateBlog = () => {
               <JoditEditor
                 ref={editor}
                 value={content}
+                config={{height: 400}}
                 onChange={(newContent) => setContent(newContent)}
               />
             </Grid>
