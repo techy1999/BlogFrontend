@@ -225,6 +225,7 @@ const BlogDetail = () => {
               padding: "10px 20px",
             }}
             placeholder="Add a comment..."
+            required
           />
 
           <button
