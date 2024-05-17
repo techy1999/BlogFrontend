@@ -3,11 +3,15 @@ import axios from "axios";
 import BlogCard from "../components/BlogCard";
 import UserBlog from "../components/UserBlog";
 import EmptyScreen from "../components/common/EmptyScreen";
+import { useLoading } from "../components/customHooks/useLoader";
+import LoaderScreen from "../components/common/LoaderScreen";
 
 const MyBlog = () => {
+  const {loading, showLoading,hideLoading} = useLoading();
   const [userBlogs, setUserBlogs] = useState([]);
 
   const getAllUserBlogs = async () => {
+    showLoading();
     try {
       //pass auth token and verify...
       const authToken = localStorage.getItem("token");
@@ -32,6 +36,8 @@ const MyBlog = () => {
       }
     } catch (error) {
       console.log("User Error", error);
+    }finally  {
+      hideLoading();
     }
   };
 
@@ -40,6 +46,7 @@ const MyBlog = () => {
   }, []);
   return (
     <>
+      {loading && <LoaderScreen open={loading} handleClose={loading}/>}
       {userBlogs.length != 0 &&
         userBlogs.map((userBlog) => (
           <>

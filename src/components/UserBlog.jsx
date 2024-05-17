@@ -21,6 +21,9 @@ import AlertContainer from "./common/AlertContainer";
 import Tooltip from "@mui/material/Tooltip";
 import ConfirmationModel from "./common/ConfirmationModel";
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import { useLoading } from "../components/customHooks/useLoader";
+import LoaderScreen from "../components/common/LoaderScreen";
+
 export default function UserBlog({
   title,
   content,
@@ -30,6 +33,7 @@ export default function UserBlog({
   createdAt,
   updatedAt,
 }) {
+  const {loading, showLoading,hideLoading} = useLoading();
   const isMobile = useMediaQuery("(max-width:600px)");
   const [confirmationModelOpen, setConfirmationModelOpen] =
     React.useState(false);
@@ -46,6 +50,7 @@ export default function UserBlog({
   //Delete Blog
   const deleteBlog = async (blogId) => {
     try {
+      showLoading();
       //pass auth token and verify...
       const authToken = localStorage.getItem("token");
 
@@ -69,10 +74,14 @@ export default function UserBlog({
     } catch (error) {
       console.log("User Error", error);
     }
+    finally{
+      hideLoading();
+    }
   };
   // Update Blog will work need to create a form ...
   const updateBlog = async () => {
     try {
+      showLoading();
       // Get the auth token from localStorage
       const authToken = localStorage.getItem("token");
 
@@ -104,6 +113,9 @@ export default function UserBlog({
       setResponseFailedData(true);
       console.log("User Error", error);
     }
+    finally{
+      hideLoading();
+    }
   };
   const handleEditClick = () => {
     setEditDialogOpen(true);
@@ -126,7 +138,7 @@ export default function UserBlog({
         message={`Blog created successfully! Go to Blogs`}
         onClose={() => setResponseFailedData(false)}
       />
-
+       {loading && <LoaderScreen open={loading} handleClose={loading}/>}
       {/* <button onClick={()=> setConfirmationModelOpen(!confirmationModelOpen)} >Set</button> */}
       <ConfirmationModel
         message={"Are you sure you want to delete this blog ? "}

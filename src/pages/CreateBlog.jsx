@@ -16,8 +16,11 @@ import { InputLabel } from "@mui/material";
 import SimpleSnackbar from "../components/common/SnackBar";
 import { SNACKBAR_SEVERITY } from "../constants/common/all.constants";
 import JoditEditor from "jodit-react";
+import { useLoading } from "../components/customHooks/useLoader";
+import LoaderScreen from "../components/common/LoaderScreen";
 
 const CreateBlog = () => {
+  const {loading, showLoading,hideLoading} = useLoading();
   const editor = useRef(null);
   const [content, setContent] = useState("");
   // Media query for detecting small screens (mobile devices)
@@ -48,6 +51,7 @@ const CreateBlog = () => {
     const authToken = localStorage.getItem("token");
 
     try {
+      showLoading();
       const { data } = await axios.post(
         `${
           process.env.REACT_APP_ENVIRONMENT === "development"
@@ -84,6 +88,8 @@ const CreateBlog = () => {
         error.response.data.message || error.response.statusText,
       );
       console.log("error", error);
+    }finally{
+      hideLoading();
     }
   };
 
@@ -95,6 +101,7 @@ const CreateBlog = () => {
         message={snackbarMessage}
         severity={severity}
       />
+       {loading && <LoaderScreen open={loading} handleClose={loading}/>}
       <form onSubmit={handleSubmit}>
         <Box
           maxWidth={600}
