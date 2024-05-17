@@ -44,7 +44,7 @@
     REACT_APP_PROD_URL="https://www.nomads.solutions/api"
     REACT_APP_ENVIRONMENT="production" #Change it to "development" for local development testing.
     ```
-- To start the project run command ```npm start```
+- To start the project run command ```npm start``` or to start with backend also running on local use ```npm run dev``` 
 - Try to access the website in browser ```http://localhost:3000/```
 
 # How to contribute and guidelines
@@ -80,6 +80,7 @@
                 git  push origin branch_name   #push your code
 
             ```
+           - Check for formating of code run command ```npm run format```
         6. now go to the UI ie. github.com and create a new pr 
         7. you can follow some tutorial as well [here](https://www.youtube.com/watch?v=8lGpZkjnkt4)
 

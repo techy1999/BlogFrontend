@@ -1,5 +1,5 @@
 import * as React from "react";
-import {Card,useMediaQuery} from "@mui/material";
+import { Card, Divider, useMediaQuery } from "@mui/material";
 
 import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
@@ -8,7 +8,7 @@ import CardActions from "@mui/material/CardActions";
 import Avatar from "@mui/material/Avatar";
 import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import { red } from "@mui/material/colors";
+import { green, red } from "@mui/material/colors";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import axios from "axios";
@@ -19,6 +19,10 @@ import DialogActions from "@mui/material/DialogActions";
 import { Button, TextField } from "@mui/material";
 import AlertContainer from "./common/AlertContainer";
 import Tooltip from "@mui/material/Tooltip";
+import ConfirmationModel from "./common/ConfirmationModel";
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import { useLoading } from "../components/customHooks/useLoader";
+import LoaderScreen from "../components/common/LoaderScreen";
 
 export default function UserBlog({
   title,
@@ -29,7 +33,10 @@ export default function UserBlog({
   createdAt,
   updatedAt,
 }) {
+  const {loading, showLoading,hideLoading} = useLoading();
   const isMobile = useMediaQuery("(max-width:600px)");
+  const [confirmationModelOpen, setConfirmationModelOpen] =
+    React.useState(false);
   const [responseSuccessData, setResponseSuccessData] = React.useState(false);
   const [responseFailedData, setResponseFailedData] = React.useState(false);
   const [editDialogOpen, setEditDialogOpen] = React.useState(false);
@@ -43,59 +50,71 @@ export default function UserBlog({
   //Delete Blog
   const deleteBlog = async (blogId) => {
     try {
+      showLoading();
       //pass auth token and verify...
       const authToken = localStorage.getItem("token");
 
       const { data } = await axios.delete(
         // `http://localhost:8000/api/blog/${blogId}`,
-        `${process.env.REACT_APP_ENVIRONMENT === "development"
-        ? `${process.env.REACT_APP_DEV_URL}/blog/${blogId}`
-        : `${process.env.REACT_APP_PROD_URL}/blog/${blogId}`
+        `${
+          process.env.REACT_APP_ENVIRONMENT === "development"
+            ? `${process.env.REACT_APP_DEV_URL}/blog/${blogId}`
+            : `${process.env.REACT_APP_PROD_URL}/blog/${blogId}`
         }`,
         {
           headers: {
             Authorization: "Bearer " + authToken,
           },
-        }
+        },
       );
       if (data?.success) {
-        alert("Blog delete successful !");
+        setConfirmationModelOpen(!confirmationModelOpen);
         window.location.reload();
       }
     } catch (error) {
       console.log("User Error", error);
     }
+    finally{
+      hideLoading();
+    }
   };
   // Update Blog will work need to create a form ...
   const updateBlog = async () => {
     try {
+      showLoading();
       // Get the auth token from localStorage
       const authToken = localStorage.getItem("token");
 
       // Make the API call to update the blog
+
       const { data } = await axios.put(
         // `http://localhost:8000/api/blog/${blogId}`,
-        `${process.env.REACT_APP_ENVIRONMENT === "development"
-        ? `${process.env.REACT_APP_DEV_URL}/blog/${blogId}`
-        : `${process.env.REACT_APP_PROD_URL}/blog/${blogId}`
+        `${
+          process.env.REACT_APP_ENVIRONMENT === "development"
+            ? `${process.env.REACT_APP_DEV_URL}/blog/${blogId}`
+            : `${process.env.REACT_APP_PROD_URL}/blog/${blogId}`
         }`,
         updatedBlogData,
         {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
-        }
+        },
       );
 
       // If the API call is successful, alert the user and reload the page
       if (data?.success) {
-        alert("Blog update successful!");
+        // alert("Blog update successful!");
+        setConfirmationModelOpen(!confirmationModelOpen);
         setResponseSuccessData(true);
         window.location.reload();
       }
     } catch (error) {
       setResponseFailedData(true);
       console.log("User Error", error);
+    }
+    finally{
+      hideLoading();
     }
   };
   const handleEditClick = () => {
@@ -119,10 +138,18 @@ export default function UserBlog({
         message={`Blog created successfully! Go to Blogs`}
         onClose={() => setResponseFailedData(false)}
       />
-
+       {loading && <LoaderScreen open={loading} handleClose={loading}/>}
+      {/* <button onClick={()=> setConfirmationModelOpen(!confirmationModelOpen)} >Set</button> */}
+      <ConfirmationModel
+        message={"Are you sure you want to delete this blog ? "}
+        confirmationModelOpen={confirmationModelOpen}
+        setConfirmationModelOpen={setConfirmationModelOpen}
+        handleDelete={() => deleteBlog(blogId)}
+        blogId={blogId}
+      />
       <Card
         sx={{
-          width: `${isMobile?"88%":"50%"}`,
+          width: `${isMobile ? "88%" : "50%"}`,
           margin: "auto",
           mt: 2,
           padding: 2,
@@ -132,22 +159,26 @@ export default function UserBlog({
           },
         }}
       >
+          <Typography variant="h3" color="primary.main">
+            {title}
+          </Typography>
         <CardHeader
           avatar={
-            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-              Date
-            </Avatar>
+            <CalendarMonthIcon  sx={{ bgcolor: green[500] }} aria-label="recipe" />
           }
-          subheader={createdAt}
+          title={`Create at 👉  ${createdAt} `}
+          sx={{padding:0}}
         />
         <CardHeader
           avatar={
-            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-              Date
-            </Avatar>
+            <CalendarMonthIcon sx={{ bgcolor: green[500] }} aria-label="recipe">
+            </CalendarMonthIcon>
           }
-          subheader={updatedAt}
+          title={`Create at 👉  ${updatedAt} `}
+          sx={{padding:0}}
         />
+
+        <Divider sx={{marginBottom:"10px" , marginTop:"10px"}}/>
 
         <CardMedia
           component="img"
@@ -156,17 +187,14 @@ export default function UserBlog({
           alt="Paella dish"
         />
         <CardContent>
-          <Typography variant="h4" color="text.primary">
-            {title}
-          </Typography>
-          <Typography paragraph color="text.secondary" 
-               dangerouslySetInnerHTML={{
-                __html:
-                content
-              }}
-            >
-            
-          </Typography>
+        
+          <Typography
+            paragraph
+            color="text.secondary"
+            dangerouslySetInnerHTML={{
+              __html: content,
+            }}
+          ></Typography>
         </CardContent>
 
         <CardActions disableSpacing>
@@ -177,7 +205,11 @@ export default function UserBlog({
           </Tooltip>
           <Tooltip title="Delete">
             <IconButton aria-label="delete">
-              <DeleteIcon onClick={() => deleteBlog(blogId)} />
+              <DeleteIcon
+                onClick={() => {
+                  setConfirmationModelOpen(!confirmationModelOpen);
+                }}
+              />
             </IconButton>
           </Tooltip>
         </CardActions>
