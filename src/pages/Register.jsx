@@ -37,8 +37,6 @@ const Register = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(inputs);
-
     try {
       const { data } = await axios.post(
         // "http://localhost:8000/api/user/register",

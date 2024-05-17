@@ -30,8 +30,6 @@ const MyBlog = () => {
         },
       );
       if (data?.success) {
-        console.log("Userdata", data.data);
-
         setUserBlogs(data?.data);
       }
     } catch (error) {

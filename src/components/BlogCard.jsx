@@ -5,10 +5,8 @@ import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import Collapse from "@mui/material/Collapse";
-import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import { red } from "@mui/material/colors";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import { Link } from "react-router-dom";
@@ -37,12 +35,6 @@ export default function BlogCard({
   const [expanded, setExpanded] = React.useState(false);
   const navigate = useNavigate();
   const handleLikes = async () => {
-    console.log(
-      "handleLikes 123333",
-      process.env.REACT_APP_ENVIRONMENT,
-      process.env.REACT_APP_DEV_URL,
-      process.env.REACT_APP_PROD_UR,
-    );
     try {
       //pass auth token and verify...
       const authToken = localStorage.getItem("token");
@@ -141,7 +133,6 @@ export default function BlogCard({
                
               dangerouslySetInnerHTML={{ __html: content }}
             >
-              {/* {content} */}
             </Typography>
           </CardContent>
         </Link>
@@ -167,12 +158,9 @@ export default function BlogCard({
         <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
             <Typography paragraph dangerouslySetInnerHTML={{ __html: content }}>
-              {/* {content} */}
             </Typography>
           </CardContent>
-        </Collapse>
-      
-           
+        </Collapse>  
       </Card>
     </>
   );

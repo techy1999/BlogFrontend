@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Box, Typography, TextField, Button ,useMediaQuery, Paper} from "@mui/material";
-import { redirect, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { authActions } from "../redux/store";
@@ -18,7 +18,7 @@ const Login = () => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch(); // add the useDispatch hook to access the store dispatch function
-  const isLogin = useSelector((state) => state.auth.isLogin); // TODO :: get the isLogin state from the Redux store
+  // const isLogin = useSelector((state) => state.auth.isLogin); // TODO :: get the isLogin state from the Redux store
   //state
   const [inputs, setInputes] = useState({
     email: "",
