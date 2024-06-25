@@ -45,6 +45,7 @@ const Blog = () => {
           }`,
         );
         if (data.data?.data) {
+          console.log('data 1223 ',data);
           setBlogs(data?.data?.data);
           setTotalPageNumber(data?.data?.totalPages);
         }

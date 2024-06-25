@@ -97,6 +97,7 @@ const Header = () => {
                 <Tabs textColor="white" value={value}>
                   <Tab label="Home" LinkComponent={Link} to="/" />
                   <Tab label="Blogs" LinkComponent={Link} to="/blogs" />
+                  <Tab label="Courses" LinkComponent={Link} to="/course" />
                   {isLogin && (
                     <>
                       <Tab
