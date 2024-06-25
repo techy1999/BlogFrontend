@@ -15,6 +15,8 @@ import NotFoundImage from "./assets/undraw_page_not_found.svg";
 import JoinTeam from "./pages/JoinTeam";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsCondition from "./pages/TermsCondition";
+import CourseCategory from "./pages/courses/CourseCategory";
+import CourseContent from "./pages/courses/CourseContent";
 
 function App() {
   return (
@@ -26,6 +28,8 @@ function App() {
         <Route path="/blog/:id" element={<BlogDetail />} />
         <Route path="/my-blogs" element={<MyBlog />} />
         <Route path="/blog" element={<CreateBlog />} />
+        <Route path="/course" element={<CourseCategory />} />
+        <Route path="/course/:id" element={<CourseContent />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/profile" element={<Profile />} />
